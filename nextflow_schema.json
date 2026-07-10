@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://github.com/laynez-21/repexprep/nextflow_schema.json",
+  "title": "laynez-21-repexprep pipeline parameters",
+  "description": "Prototype schema for WGS preprocessing for RepeatExplorer2.",
+  "type": "object",
+  "definitions": {
+    "input_output_options": {
+      "title": "Input/output options",
+      "type": "object",
+      "description": "Input samplesheet and output directory.",
+      "properties": {
+        "input": {
+          "type": ["string", "null"],
+          "description": "Path to the input samplesheet."
+        },
+        "outdir": {
+          "type": "string",
+          "default": "results",
+          "description": "Output directory."
+        },
+        "test_mode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether the pipeline is running in test mode."
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "#/definitions/input_output_options"
+    }
+  ]
+}

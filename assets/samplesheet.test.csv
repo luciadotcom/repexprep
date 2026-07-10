@@ -1,0 +1,2 @@
+sample,fastq_1,fastq_2,lane,genome_size_bp,ploidy
+toyA,assets/test_data/toyA_R1.fastq.gz,assets/test_data/toyA_R2.fastq.gz,L001,135000000,2
