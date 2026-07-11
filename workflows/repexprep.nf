@@ -6,6 +6,8 @@
  * la configuración y la estructura del proyecto funcionan.
  */
 
+ include  { INPUT_CHECK} from '../subworkflows/local/input_check'
+
 workflow REPEXPREP {
 
     main:
@@ -20,22 +22,16 @@ workflow REPEXPREP {
     log.info "Test mode         : ${params.test_mode}"
     log.info ""
 
-    /*
-     * Emitimos un canal ficticio para comprobar que el workflow existe.
-     * Más adelante aquí conectaremos:
-     *
-     * INPUT_CHECK
-     * READ_QC
-     * TRIM_FILTER
-     * LENGTH_NORMALIZATION
-     * COVERAGE_SAMPLING
-     * REPEX_FORMATTING
-     * REPORTING
-     */
-    done_ch= Channel.value("REPEXPREP skeleton completed")
+    if (!params.input) {
+        error "No input samplesheet specified. Use --input samplesheet.csv"
+    }
 
-    done_ch.view()
+    INPUT_CHECK (file(params.input))
+
+    INPUT_CHECK.out.validated_samplesheet.view {validated ->
+        "Validated samplesheet: ${validated}"
+    }
 
     emit:
-    done = done_ch
+    validated_samplesheet= INPUT_CHECK.out.validated_samplesheet
 }
