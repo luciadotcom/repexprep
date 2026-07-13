@@ -76,6 +76,9 @@ workflow REPEXPREP {
     READ_QC.out.raw_fastq_stats.view { sample_meta, stats_file ->
         "Raw FASTQ stats: ${sample_meta.id} | ${stats_file}"
     }
+    READ_QC.out.pair_audit.view { sample_meta, audit_file ->
+    "Pair audit: ${sample_meta.id} | ${audit_file}"
+    }
 
     emit:
     samples         = ch_samples
