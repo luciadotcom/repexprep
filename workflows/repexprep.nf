@@ -2,11 +2,10 @@
  * workflows/repexprep.nf
  *
  * Workflow principal del prototipo.
- * Ahora valida la samplesheet y convierte la tabla validada
- * en un canal de muestras paired-end.
  */
 
 include { INPUT_CHECK } from '../subworkflows/local/input_check'
+include { READ_QC }     from '../subworkflows/local/read_qc'
 
 workflow REPEXPREP {
 
@@ -34,16 +33,7 @@ workflow REPEXPREP {
 
     /*
      * Step 2:
-     * Convert the validated CSV into a Nextflow channel.
-     *
-     * Each item becomes:
-     *
-     * tuple(
-     *   meta,
-     *   [R1, R2]
-     * )
-     *
-     * This tuple shape is what later modules will use.
+     * Parse validated CSV into sample channel.
      */
     ch_samples = INPUT_CHECK.out.validated_samplesheet
         .splitCsv(header: true)
@@ -72,12 +62,22 @@ workflow REPEXPREP {
 
     /*
      * Temporary debug view.
-     * Later this channel will go into READ_QC.
      */
     ch_samples.view { sample_meta, reads ->
         "Sample channel item: ${sample_meta.id} | R1=${reads[0]} | R2=${reads[1]}"
     }
 
+    /*
+     * Step 3:
+     * Raw FASTQ statistics.
+     */
+    READ_QC(ch_samples)
+
+    READ_QC.out.raw_fastq_stats.view { sample_meta, stats_file ->
+        "Raw FASTQ stats: ${sample_meta.id} | ${stats_file}"
+    }
+
     emit:
-    samples = ch_samples
+    samples         = ch_samples
+    raw_fastq_stats = READ_QC.out.raw_fastq_stats
 }
