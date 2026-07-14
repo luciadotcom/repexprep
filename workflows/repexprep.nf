@@ -7,6 +7,7 @@
 include { INPUT_CHECK } from '../subworkflows/local/input_check'
 include { READ_QC }     from '../subworkflows/local/read_qc'
 include { LENGTH_NORMALIZATION } from '../subworkflows/local/length_normalization'
+include { COVERAGE_SAMPLING } from '../subworkflows/local/coverage_sampling'
 
 workflow REPEXPREP {
 
@@ -98,6 +99,26 @@ LENGTH_NORMALIZATION.out.normalized_reads.view { sample_meta, reads ->
 LENGTH_NORMALIZATION.out.crop_reports.view { sample_meta, crop_report ->
     "Crop report: ${sample_meta.id} | ${crop_report}"
 }
+/*
+ * Step 5:
+ * Plan target coverage and randomly sample complete read pairs.
+ */
+COVERAGE_SAMPLING(
+    LENGTH_NORMALIZATION.out.normalized_reads,
+    LENGTH_NORMALIZATION.out.target_lengths
+)
+
+COVERAGE_SAMPLING.out.coverage_plans.view { sample_id, sample_meta, plan_file ->
+    "Coverage plan: ${sample_meta.id} | ${plan_file}"
+}
+
+COVERAGE_SAMPLING.out.sampled_reads.view { sample_meta, reads ->
+    "Sampled reads: ${sample_meta.id} | R1=${reads[0]} | R2=${reads[1]}"
+}
+
+COVERAGE_SAMPLING.out.sampling_reports.view { sample_meta, report_file ->
+    "Sampling report: ${sample_meta.id} | ${report_file}"
+}
 
     emit:
     samples         = ch_samples
@@ -105,5 +126,8 @@ LENGTH_NORMALIZATION.out.crop_reports.view { sample_meta, crop_report ->
     target_lengths   = LENGTH_NORMALIZATION.out.target_lengths
     normalized_reads = LENGTH_NORMALIZATION.out.normalized_reads
     crop_reports     = LENGTH_NORMALIZATION.out.crop_reports
+    coverage_plans   = COVERAGE_SAMPLING.out.coverage_plans
+    sampled_reads    = COVERAGE_SAMPLING.out.sampled_reads
+    sampling_reports = COVERAGE_SAMPLING.out.sampling_reports
    
 }
