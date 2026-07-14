@@ -6,6 +6,7 @@
 
 include { INPUT_CHECK } from '../subworkflows/local/input_check'
 include { READ_QC }     from '../subworkflows/local/read_qc'
+include { LENGTH_NORMALIZATION } from '../subworkflows/local/length_normalization'
 
 workflow REPEXPREP {
 
@@ -80,7 +81,29 @@ workflow REPEXPREP {
     "Pair audit: ${sample_meta.id} | ${audit_file}"
     }
 
+    /*
+ * Step 4:
+ * Choose target length and crop reads to fixed length.
+ */
+LENGTH_NORMALIZATION(ch_samples)
+
+LENGTH_NORMALIZATION.out.target_lengths.view { sample_id, sample_meta, target_file ->
+    "Target length: ${sample_meta.id} | ${target_file}"
+}
+
+LENGTH_NORMALIZATION.out.normalized_reads.view { sample_meta, reads ->
+    "Normalized reads: ${sample_meta.id} | R1=${reads[0]} | R2=${reads[1]}"
+}
+
+LENGTH_NORMALIZATION.out.crop_reports.view { sample_meta, crop_report ->
+    "Crop report: ${sample_meta.id} | ${crop_report}"
+}
+
     emit:
     samples         = ch_samples
     raw_fastq_stats = READ_QC.out.raw_fastq_stats
+    target_lengths   = LENGTH_NORMALIZATION.out.target_lengths
+    normalized_reads = LENGTH_NORMALIZATION.out.normalized_reads
+    crop_reports     = LENGTH_NORMALIZATION.out.crop_reports
+   
 }
