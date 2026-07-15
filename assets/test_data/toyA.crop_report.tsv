@@ -1,0 +1,2 @@
+sample	target_length	total_pairs	retained_pairs	dropped_short_pairs	id_mismatches	status
+toyA	150	1000	1000	0	0	PASS

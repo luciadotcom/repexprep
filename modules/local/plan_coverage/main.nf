@@ -14,7 +14,7 @@ process PLAN_COVERAGE {
 
     script:
     def genome_size = meta.genome_size_bp ?: params.genome_size_bp ?: ""
-    def target_cov  = meta.target_coverage ?: params.target_coverage ?: 0.2
+    def target_cov  = params.target_coverage ?: meta.target_coverage ?: 0.2
 
     """
     plan_coverage.py \

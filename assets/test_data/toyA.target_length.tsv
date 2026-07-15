@@ -1,0 +1,2 @@
+sample	total_pairs	observed_min_pair_length	observed_max_pair_length	decision_mode	target_length	pairs_at_or_above_target	retained_fraction
+toyA	1000	150	150	percentile_95	150	1000	1.000000

@@ -1,0 +1,5 @@
+sample,fastq_1,fastq_2,lane,organism,genome_size_bp,ploidy,organelle_fasta,target_coverage,target_read_length
+SRR38519255_Carex_boryana,fastq/SRR38519255_Carex_boryana_R1.fastq.gz,fastq/SRR38519255_Carex_boryana_R2.fastq.gz,L001,Carex_boryana,1350000000,2,,0.001,
+SRR38519254_Carex_borbonica,fastq/SRR38519254_Carex_borbonica_R1.fastq.gz,fastq/SRR38519254_Carex_borbonica_R2.fastq.gz,L001,Carex_borbonica,1350000000,2,,0.001,
+SRR38519253_Carex_borbonica,fastq/SRR38519253_Carex_borbonica_R1.fastq.gz,fastq/SRR38519253_Carex_borbonica_R2.fastq.gz,L001,Carex_borbonica,1350000000,2,,0.001,
+SRR38519244_Carex_boryana,fastq/SRR38519244_Carex_boryana_R1.fastq.gz,fastq/SRR38519244_Carex_boryana_R2.fastq.gz,L001,Carex_boryana,1350000000,2,,0.001,
