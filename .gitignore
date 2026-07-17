@@ -18,3 +18,5 @@ __pycache__/
 
 # OS/editor noise
 .DS_Store
+samplesheets/validated/
+samplesheets/*.validated.csv
