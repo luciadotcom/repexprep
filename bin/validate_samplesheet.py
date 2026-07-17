@@ -10,7 +10,6 @@ from pathlib import Path
 REQUIRED_COLUMNS = ["sample", "fastq_1", "fastq_2"]
 
 OPTIONAL_COLUMNS = [
-    "lane",
     "organism",
     "genome_size_bp",
     "ploidy",

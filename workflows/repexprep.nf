@@ -6,9 +6,12 @@
 
 include { INPUT_CHECK }           from '../subworkflows/local/input_check'
 include { READ_QC }               from '../subworkflows/local/read_qc'
+include { ORGANELLE_FILTERING }     from '../subworkflows/local/organelle_filter'
 include { LENGTH_NORMALIZATION }  from '../subworkflows/local/length_normalization'
 include { COVERAGE_SAMPLING }     from '../subworkflows/local/coverage_sampling'
 include { REPEX_FORMATTING }      from '../subworkflows/local/repex_formatting'
+
+
 
 workflow REPEXPREP {
 
@@ -82,10 +85,24 @@ workflow REPEXPREP {
     }
 
     /*
-     * Step 4:
+    *Step 4: filter out organelles's DNA
+    */
+
+    ORGANELLE_FILTERING(ch_samples)
+
+    ORGANELLE_FILTERING.out.reports.view { sm, report_file ->
+    "Organelle filter report: ${sm.id} | ${report_file}"
+}
+
+    ORGANELLE_FILTERING.out.filtered_samples.view { sm, reads ->
+    "Organelle-filtered reads: ${sm.id} | R1=${reads[0]} | R2=${reads[1]}"
+}
+
+    /*
+     * Step 5:
      * Choose target length and crop reads to fixed length.
      */
-    LENGTH_NORMALIZATION(ch_samples)
+    LENGTH_NORMALIZATION(ORGANELLE_FILTERING.out.filtered_samples)
 
     LENGTH_NORMALIZATION.out.target_lengths.view { sample_id, sm, target_file ->
         "Target length: ${sm.id} | ${target_file}"
@@ -100,7 +117,7 @@ workflow REPEXPREP {
     }
 
     /*
-     * Step 5:
+     * Step 6:
      * Plan target coverage and randomly sample complete read pairs.
      */
     COVERAGE_SAMPLING(
@@ -121,7 +138,7 @@ workflow REPEXPREP {
     }
 
     /*
-     * Step 6:
+     * Step 7:
      * Convert sampled FASTQ pairs to final RepeatExplorer-style FASTA
      * and validate the final FASTA.
      */
@@ -143,6 +160,8 @@ workflow REPEXPREP {
     samples             = ch_samples
     raw_fastq_stats     = READ_QC.out.raw_fastq_stats
     pair_audit          = READ_QC.out.pair_audit
+    organelle_filtered_reads   = ORGANELLE_FILTERING.out.filtered_samples
+    organelle_filter_reports   = ORGANELLE_FILTERING.out.reports
     target_lengths      = LENGTH_NORMALIZATION.out.target_lengths
     normalized_reads    = LENGTH_NORMALIZATION.out.normalized_reads
     crop_reports        = LENGTH_NORMALIZATION.out.crop_reports
