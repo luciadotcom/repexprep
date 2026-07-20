@@ -1,0 +1,6 @@
+9:    executor = 'pbspro'
+11:        cpus   = 8
+12:        memory = '16 GB'
+13:        time   = '12h'
+17:executor {
+18:    queueSize       = 20
