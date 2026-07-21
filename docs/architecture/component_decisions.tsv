@@ -1,0 +1,14 @@
+component	current_location	decision	target_location	reason
+validate_samplesheet.py	bin/	ADAPT	bin/	Requires improvement: a) accepting and validating new parameters; b)clearer error messages and c) return a standarized CSV file. 
+raw_fastq_stats.py	bin/	REPLACE_WITH_NFCORE	modules/nf-core/fastqc	Better use optimized stardard modules as FastQC or SeqKit stats
+pair_audit.py	bin/	KEEP	bin/	Specific logic for validating the integrity and synchronity of pairs in FASTQ format 
+organelle_filter	modules/local/organelle_filter/main.nf	ADAPT	modules/local/organelle_filter/main.nf	Must immprove sintaxis to better adjust to DLS2. 
+choose_target_length.py	bin/	KEEP	bin/	Ad-hoc algorithm that determines the target lenght using percentiles to optimize the number of analysed read without losing a high number of them by adjusting to a static measurement.
+crop_pairs_to_length.py	bin/	KEEP	bin/	Synchronic crop of paired-reads to the target length maintaining the header's structure.
+plan_coverage.py	bin/	KEEP	bin/	Mathematical algorithm that adjust the subsample of paired-reads based on genome size, target coverage (by default, 0.2) and target length. 
+sample_pairs.py	bin/	KEEP	bin/	Random but reproducible (seed 42) coverage subsample of pais applying the target coverage. 
+rename_fastq_to_fasta.py	bin/	KEEP	bin/	Specific functions: a)read interleaving, b)adjusting header naming to RepeatExplorer format and c)conversion of FASTQ to FASTA format. 
+validate_repex_fasta.py	bin/	KEEP	bin/	Auditory logic and quality control over FASTA final archives. 
+merge_lanes	modules/local/merge_lanes/	REMOVE	N/A	Obsolete: "lane" column is no longer used.
+interleave_fasta	modules/local/interleave_fasta/	REMOVE	N/A	Functionality integrated in the module RENAME_FASTQ_TO_FASTA
+archive_sample	modules/local/archive_sample/	REMOVE	N/A	Obsolete.

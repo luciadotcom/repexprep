@@ -1,0 +1,11 @@
+process	source_file	inputs	outputs	parameters	software	temporary_or_final	qc_metrics
+VALIDATE_SAMPLESHEET	modules/local/validate_samplesheet/main.nf	Samplesheet CSV (raw)	Samplesheet CSV (validated)	--input	Python / pandas	intermediate	Samplesheet structure & paths valid
+RAW_FASTQ_STATS	modules/local/raw_fastq_stats/main.nf	Paired FASTQ (.fastq.gz)	Raw stats JSON / TXT	None	FastQC / SeqKit / Python	QC	Total raw reads, base quality, %GC
+PAIR_AUDIT	modules/local/pair_audit/main.nf	Paired FASTQ (.fastq.gz)	Audit report / Validated paired FASTQ	None	Python / seqkit	intermediate	Read pairing consistency, orphaned reads
+ORGANELLE_FILTER	modules/local/organelle_filter/main.nf	Paired FASTQ + Organelle reference FASTA	Filtered paired FASTQ + Unmapped/Mapped BAM	organelle_ref, threads	Bowtie2 / Samtools / BWA	intermediate	Reads retained, organelle reads removed (%)
+CHOOSE_TARGET_LENGTH	modules/local/choose_target_length/main.nf	FASTQ / Stats	Target length value / metadata	target_length, strategy	Python / Bash	intermediate	Chosen crop length (bp)
+CROP_FIXED_LENGTH	modules/local/crop_fixed_length/main.nf	Paired FASTQ	Cropped paired FASTQ	crop_length	Trimmomatic / Cutadapt / Fastp	intermediate	Reads trimmed to exact length, discarded short reads
+PLAN_COVERAGE	modules/local/plan_coverage/main.nf	Cropped FASTQ + Genome size estimate	Sampling plan / Read count target	target_coverage, genome_size, ploidy	Python	intermediate	Calculated target pairs required
+SAMPLE_PAIRS	modules/local/sample_pairs/main.nf	Cropped FASTQ + Sampling plan	Subsampled paired FASTQ	sample_seed	Seqtk / Python / reformat.sh	intermediate	Final sampled read count & coverage depth
+RENAME_FASTQ_TO_FASTA	modules/local/rename_convert_fasta/main.nf	Subsampled FASTQ	Formatted FASTA	prefix_pattern	seqtk / Awk / Python	intermediate	FASTA header formatting status
+VALIDATE_REPEX_FASTA	modules/local/validate_repex_fasta/main.nf	Formatted FASTA	Final RepeatExplorer FASTA + Report	min_reads, max_reads	Python	final	RepeatExplorer compatibility check, final sequence count

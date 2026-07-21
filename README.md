@@ -5,25 +5,27 @@
 REPEXPREP is a Nextflow DSL2 pipeline for preprocessing paired-end
 whole-genome sequencing reads for repeatome analysis with RepeatExplorer2.
 
-The pipeline validates the input samplesheet, audits paired-end FASTQ
-files, calculates raw-read statistics, normalizes read length, removes
+The pipeline validates the input samplesheet, audits paired-end FASTQ files, calculates raw-read statistics, normalizes read length, removes
 read pairs matching organelle reference sequences, plans coverage-based
 subsampling, samples paired reads reproducibly, and generates validated
 RepeatExplorer2-compatible FASTA files.
 
 ```mermaid
 flowchart TD
-    A[Input samplesheet] --> B[Samplesheet validation]
-    B --> C[Paired-end FASTQ audit]
-    C --> D[Raw FASTQ statistics]
-    D --> E[Target read-length selection]
-    E --> F[Fixed-length normalization]
-    F --> G[Organelle filtering]
-    G --> H[Coverage planning]
-    H --> I[Paired-read subsampling]
-    I --> J[RepeatExplorer formatting]
-    J --> K[RepeatExplorer FASTA validation]
-    K --> L[RepeatExplorer-compatible FASTA]
+    A[Input samplesheet] --> B[VALIDATE_SAMPLESHEET]
+    B --> C[Parsed sample channel]
+
+    C --> D[RAW_FASTQ_STATS]
+    C --> E[PAIR_AUDIT]
+    C --> F[ORGANELLE_FILTER]
+
+    F --> G[CHOOSE_TARGET_LENGTH]
+    G --> H[CROP_FIXED_LENGTH]
+    H --> I[PLAN_COVERAGE]
+    I --> J[SAMPLE_PAIRS]
+    J --> K[RENAME_FASTQ_TO_FASTA]
+    K --> L[VALIDATE_REPEX_FASTA]
+    L --> M[Accepted RepeatExplorer FASTA]
 ```
 
 ## Current status
@@ -42,22 +44,21 @@ The corresponding functional baseline is tagged as:
 ```text
 baseline-local-hpc-orgfilter-2026-07-20
 ```
-
-This tag represents a functional development baseline, not a stable
-public release.
+This tag represents a functional development baseline, not a stable public release.
 
 ## Workflow overview
 
-1. Validate the input samplesheet.
-2. Audit paired-end FASTQ files.
-3. Calculate raw FASTQ statistics.
-4. Determine the target read length.
-5. Normalize paired reads to a fixed length.
-6. Filter read pairs matching organelle references.
-7. Calculate the required low-pass sampling depth.
-8. Subsample paired-end reads reproducibly.
-9. Interleave, rename, and convert the selected reads.
-10. Export and validate RepeatExplorer2-compatible FASTA files.
+1. **Samplesheet validation**.- Validate the input CSV samplesheet and resolve file paths. Module involved: *VALIDATE_SAMPLESHEET*
+2. **Parallel raw QC and pair audit**.-
+    2.1. Calculate raw FASQ statistics. Module involved: *RAW_FASTQ_STATS*
+    2.2. Audit paired-end FASTQ integrity and read-pairing consistency. Module involved: *PAIR_AUDIT*
+3. **Organelle filtering**.- Remove read pairs matching chloroplast or mitochondrial reference sequences. Module involved:*ORGANELLE_FILTER*
+4. **Read-length planning**.- Determine the target read-length across samples. Module involved: *CHOOSE_TARGET_LENGTH*
+5. **Read trimming**.- Crop paired reads to the exact target fixed length. Module involved: *CROP_FIXED_LENGTH*
+6. **Coverage planning**.- Calculate the exact number of read pairs needed based on genome size, ploidy, and target coverage. Module involved: *PLAN_COVERAGE*
+7. **Paired subsampling**.-Subsample paired-end reads reproducibly using a fixed random seed. Module involved: *SAMPLE_PAIRS*
+8. **RepeatExplorer formatting**.- Interleave paired reads, convert FASTQ to FASTA, and format read headers to conform strictly to RepeatExplorer2 requirements. Module involved: *RENAME_FASTQ_TO_FASTA*
+9. **Final FASTA validation**.- Audit the generated FASTA file against RepeatExplorer2 structural rules to issue a final acceptance report. Module involved: *VALIDATE_REPEX_FASTA*
 
 ## Main processing stages
 
@@ -73,6 +74,14 @@ public release.
 | Paired-read subsampling | Samples reads according to the coverage plan | `${meta.id}_R*.sampled.fastq.gz` |
 | RepeatExplorer formatting | Converts paired reads into a RepeatExplorer2-compatible FASTA file | `${meta.id}.repex.fasta` |
 | FASTA validation | Checks the structure of the final FASTA file | `${meta.id}.repex_validation.tsv` |
+
+## Architecture documentation
+
+Architecture documentation can be found in `docs/architecture`. For detailed process contracts, execution graph diagrams, component maintenance decisions, and intermediate file schemas, refer to the following specs:
+
+- **Process Inventory:** `docs/architecture/process_inventory.tsv`. Also, an additional process_inventory document is available at a readable format at `docs/architecture/process_inventory.md`
+- **Workflow Map:** `docs/architecture/workflow_map.md`
+- **Component Refactoring Plan:** `docs/architecture/component_decisions.tsv`
 
 ## Preliminary requirements
 
@@ -234,6 +243,13 @@ The principal final output is:
 ```text
 ${params.outdir}/repex/fasta/*.repex.fasta
 ```
+## Data acceptance criterion
+
+A run is considered successful and accepted for downstream RepeatExplorer analysis ONLY when the corresponding validation report is generated (`${params.outdir}/repex/validation/${sample}.repex_validation.tsv`), containing:  
+
+```text
+status = PASS
+``` 
 
 ## Development warning and known limitations
 
