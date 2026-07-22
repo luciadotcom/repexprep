@@ -1,7 +1,7 @@
 /*
  * workflows/repexprep.nf
  *
- * Workflow principal del prototipo local.
+ * Main workflow. All the subworkflows are called and executed here.
  */
 
 include { INPUT_CHECK }           from '../subworkflows/local/input_check'

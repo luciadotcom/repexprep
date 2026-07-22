@@ -245,11 +245,11 @@ ${params.outdir}/repex/fasta/*.repex.fasta
 ```
 ## Data acceptance criterion
 
-A run is considered successful and accepted for downstream RepeatExplorer analysis ONLY when the corresponding validation report is generated (`${params.outdir}/repex/validation/${sample}.repex_validation.tsv`), containing:  
+A run is considered successful and accepted for downstream RepeatExplorer analysis ONLY when the corresponding validation report is generated (`${params.outdir}/repex/validation/${sample}.repex_validation.tsv`), containing:
 
 ```text
 status = PASS
-``` 
+```
 
 ## Development warning and known limitations
 
@@ -271,7 +271,8 @@ Planned developments include:
 - reproducible container support;
 - testing with the complete dataset;
 - improved automated testing;
-- progressive alignment with nf-core guidelines.
+- progressive alignment with nf-core guidelines;
+- filling out the conf/modules.config with all the publishDir routes to easily change the result tree.
 
 ## Documentation
 

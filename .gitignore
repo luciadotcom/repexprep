@@ -20,3 +20,8 @@ __pycache__/
 .DS_Store
 samplesheets/validated/
 samplesheets/*.validated.csv
+
+# Nextflow temporales y ejecuciones
+work/
+.nextflow/
+.nextflow.log*
