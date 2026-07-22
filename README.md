@@ -118,10 +118,10 @@ be used on different systems.
 | `fastq_1` | Yes | Path to the R1 FASTQ file |
 | `fastq_2` | Yes | Path to the R2 FASTQ file |
 | `organism` | No | Organism name |
-| `genome_size_bp` | Required for coverage planning | Estimated haploid genome size in base pairs |
-| `ploidy` | Required for coverage planning | Expected ploidy level |
-| `organelle_fasta` | Required when organelle filtering is enabled | FASTA file containing chloroplast, mitochondrial, or combined organelle reference sequences |
-| `target_coverage` | Required for coverage-based sampling | Requested genome coverage |
+| `genome_size_bp`| Conditional: Required for coverage planning | Estimated haploid genome size in base pairs |
+| `ploidy` | Conditional: Required for coverage planning | Expected ploidy level |
+| `organelle_fasta` | Conditional: Required when organelle filtering is enabled | FASTA file containing chloroplast, mitochondrial, or combined organelle reference sequences |
+| `target_coverage` | Optional | Requested genome coverage |
 | `target_read_length` | No | Explicit normalized read length; it may be determined automatically when empty |
 
 ## Quick start
