@@ -7,7 +7,11 @@ import sys
 from pathlib import Path
 
 
-REQUIRED_COLUMNS = ["sample", "fastq_1", "fastq_2"]
+REQUIRED_COLUMNS = [
+    "sample",
+    "fastq_1",
+    "fastq_2",
+]
 
 OPTIONAL_COLUMNS = [
     "organism",
@@ -22,46 +26,68 @@ SAMPLE_RE = re.compile(r"^[A-Za-z0-9_.-]+$")
 
 
 def die(message: str) -> None:
+    """Print an error message and terminate the program."""
     print(f"[validate_samplesheet] ERROR: {message}", file=sys.stderr)
     sys.exit(1)
 
 
 def resolve_input_path(raw_path: str, base_dir: Path) -> Path:
+    """Resolve a relative input path against the selected base directory."""
     path = Path(raw_path)
 
     if path.is_absolute():
-        return path
+        return path.resolve()
 
     return (base_dir / path).resolve()
 
 
 def check_fastq_path(path: Path, row_number: int, column: str) -> None:
+    """Check that a FASTQ path exists and has an accepted extension."""
     if not path.exists():
-        die(f"Row {row_number}: file in column '{column}' does not exist: {path}")
+        die(
+            f"Row {row_number}: file in column "
+            f"'{column}' does not exist: {path}"
+        )
 
     if not path.is_file():
-        die(f"Row {row_number}: path in column '{column}' is not a file: {path}")
+        die(
+            f"Row {row_number}: path in column "
+            f"'{column}' is not a file: {path}"
+        )
 
-    name = path.name
-    valid_suffix = (
-        name.endswith(".fastq.gz")
-        or name.endswith(".fq.gz")
-        or name.endswith(".fastq")
-        or name.endswith(".fq")
+    valid_suffixes = (
+        ".fastq.gz",
+        ".fq.gz",
+        ".fastq",
+        ".fq",
     )
 
-    if not valid_suffix:
+    if not path.name.endswith(valid_suffixes):
         die(
-            f"Row {row_number}: file in column '{column}' does not look like FASTQ/FASTQ.GZ: {path}"
+            f"Row {row_number}: file in column '{column}' "
+            f"does not look like FASTQ or FASTQ.GZ: {path}"
         )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Validate a paired-end WGS samplesheet for repexprep."
+        description=(
+            "Validate a paired-end WGS samplesheet for REPEXPREP."
+        )
     )
-    parser.add_argument("--input", required=True, help="Input samplesheet CSV")
-    parser.add_argument("--output", required=True, help="Validated output CSV")
+
+    parser.add_argument(
+        "--input",
+        required=True,
+        help="Input samplesheet CSV",
+    )
+
+    parser.add_argument(
+        "--output",
+        required=True,
+        help="Validated output CSV",
+    )
+
     parser.add_argument(
         "--base-dir",
         default=".",
@@ -71,103 +97,210 @@ def main() -> None:
     args = parser.parse_args()
 
     samplesheet = Path(args.input)
+    output_path = Path(args.output)
     base_dir = Path(args.base_dir).resolve()
 
     if not samplesheet.exists():
         die(f"Samplesheet does not exist: {samplesheet}")
 
+    if not samplesheet.is_file():
+        die(f"Samplesheet path is not a file: {samplesheet}")
+
     rows = []
 
-    with open(samplesheet, newline="") as handle:
+    with samplesheet.open(
+        mode="r",
+        newline="",
+        encoding="utf-8",
+    ) as handle:
         reader = csv.DictReader(handle)
 
         if reader.fieldnames is None:
             die("Samplesheet is empty or has no header.")
 
-        missing = [col for col in REQUIRED_COLUMNS if col not in reader.fieldnames]
-        if missing:
-            die(f"Missing required column(s): {', '.join(missing)}")
+        fieldnames = [
+            field.strip() if isinstance(field, str) else field
+            for field in reader.fieldnames
+        ]
+
+        reader.fieldnames = fieldnames
+
+        missing_columns = [
+            column
+            for column in REQUIRED_COLUMNS
+            if column not in fieldnames
+        ]
+
+        if missing_columns:
+            die(
+                "Missing required column(s): "
+                + ", ".join(missing_columns)
+            )
 
         for row_number, row in enumerate(reader, start=2):
-            clean = {k: (v.strip() if isinstance(v, str) else v) for k, v in row.items()}
+            clean = {
+                key: value.strip() if isinstance(value, str) else value
+                for key, value in row.items()
+            }
 
             sample = clean.get("sample", "")
+
             if not sample:
                 die(f"Row {row_number}: sample is empty.")
 
-            if not SAMPLE_RE.match(sample):
+            if not SAMPLE_RE.fullmatch(sample):
                 die(
-                    f"Row {row_number}: sample '{sample}' contains unsafe characters. "
-                    "Use letters, numbers, underscore, dot or hyphen."
+                    f"Row {row_number}: sample '{sample}' contains "
+                    "unsafe characters. Use only letters, numbers, "
+                    "underscores, dots, or hyphens."
                 )
 
-            for col in ["fastq_1", "fastq_2"]:
-                if not clean.get(col):
-                    die(f"Row {row_number}: column '{col}' is empty.")
+            for column in ("fastq_1", "fastq_2"):
+                raw_path = clean.get(column, "")
 
-                resolved = resolve_input_path(clean[col], base_dir)
-                check_fastq_path(resolved, row_number, col)
-                clean[col] = str(resolved)
+                if not raw_path:
+                    die(
+                        f"Row {row_number}: column "
+                        f"'{column}' is empty."
+                    )
 
-            if not clean.get("lane"):
-                clean["lane"] = "L001"
+                resolved_path = resolve_input_path(
+                    raw_path,
+                    base_dir,
+                )
+
+                check_fastq_path(
+                    resolved_path,
+                    row_number,
+                    column,
+                )
+
+                clean[column] = str(resolved_path)
 
             genome_size = clean.get("genome_size_bp", "")
+
             if genome_size:
                 try:
-                    if int(genome_size) <= 0:
-                        raise ValueError
+                    genome_size_value = int(genome_size)
                 except ValueError:
-                    die(f"Row {row_number}: genome_size_bp must be a positive integer.")
+                    die(
+                        f"Row {row_number}: genome_size_bp "
+                        "must be a positive integer."
+                    )
+
+                if genome_size_value <= 0:
+                    die(
+                        f"Row {row_number}: genome_size_bp "
+                        "must be a positive integer."
+                    )
 
             ploidy = clean.get("ploidy", "")
+
             if ploidy:
                 try:
-                    if int(ploidy) <= 0:
-                        raise ValueError
+                    ploidy_value = int(ploidy)
                 except ValueError:
-                    die(f"Row {row_number}: ploidy must be a positive integer.")
+                    die(
+                        f"Row {row_number}: ploidy must be "
+                        "a positive integer."
+                    )
+
+                if ploidy_value <= 0:
+                    die(
+                        f"Row {row_number}: ploidy must be "
+                        "a positive integer."
+                    )
 
             target_coverage = clean.get("target_coverage", "")
+
             if target_coverage:
                 try:
-                    cov = float(target_coverage)
-                    if cov <= 0:
-                        raise ValueError
+                    target_coverage_value = float(target_coverage)
                 except ValueError:
-                    die(f"Row {row_number}: target_coverage must be a positive number.")
+                    die(
+                        f"Row {row_number}: target_coverage "
+                        "must be a positive number."
+                    )
 
-            target_read_length = clean.get("target_read_length", "")
+                if target_coverage_value <= 0:
+                    die(
+                        f"Row {row_number}: target_coverage "
+                        "must be a positive number."
+                    )
+
+            target_read_length = clean.get(
+                "target_read_length",
+                "",
+            )
+
             if target_read_length:
                 try:
-                    if int(target_read_length) <= 0:
-                        raise ValueError
+                    target_read_length_value = int(
+                        target_read_length
+                    )
                 except ValueError:
-                    die(f"Row {row_number}: target_read_length must be a positive integer.")
+                    die(
+                        f"Row {row_number}: target_read_length "
+                        "must be a positive integer."
+                    )
+
+                if target_read_length_value <= 0:
+                    die(
+                        f"Row {row_number}: target_read_length "
+                        "must be a positive integer."
+                    )
 
             rows.append(clean)
 
     if not rows:
         die("Samplesheet has no data rows.")
 
-    seen = set()
+    seen_samples = set()
+
     for row in rows:
-        key = (row["sample"], row.get("lane", "L001"))
-        if key in seen:
-            die(f"Duplicated sample/lane combination: {key[0]} / {key[1]}")
-        seen.add(key)
+        sample = row["sample"]
+
+        if sample in seen_samples:
+            die(f"Duplicated sample identifier: {sample}")
+
+        seen_samples.add(sample)
 
     output_columns = REQUIRED_COLUMNS + OPTIONAL_COLUMNS
 
-    with open(args.output, "w", newline="") as out_handle:
-        writer = csv.DictWriter(out_handle, fieldnames=output_columns)
+    output_path.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    with output_path.open(
+        mode="w",
+        newline="",
+        encoding="utf-8",
+    ) as out_handle:
+        writer = csv.DictWriter(
+            out_handle,
+            fieldnames=output_columns,
+            extrasaction="ignore",
+        )
+
         writer.writeheader()
 
         for row in rows:
-            writer.writerow({col: row.get(col, "") for col in output_columns})
+            writer.writerow(
+                {
+                    column: row.get(column, "")
+                    for column in output_columns
+                }
+            )
 
-    print(f"[validate_samplesheet] OK: {len(rows)} row(s) validated.")
-    print(f"[validate_samplesheet] Output: {args.output}")
+    print(
+        f"[validate_samplesheet] OK: "
+        f"{len(rows)} row(s) validated."
+    )
+    print(
+        f"[validate_samplesheet] Output: "
+        f"{output_path}"
+    )
 
 
 if __name__ == "__main__":

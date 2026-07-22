@@ -3,9 +3,9 @@ nextflow.enable.dsl = 2
 /*
  * main.nf
  *
- * Punto de entrada del pipeline.
- * En una pipeline bien organizada, este archivo debe ser pequeño.
- * Aquí solo activamos DSL2 e importamos el workflow principal.
+ * Workflow entrypoint.  Punto de entrada del pipeline.
+ * Small file. Here we only activate DSL2 and import the main workflow (in other words, REPEX is called here).
+ *
  */
 
 include { REPEXPREP } from './workflows/repexprep'
