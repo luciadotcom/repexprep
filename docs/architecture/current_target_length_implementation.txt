@@ -1,0 +1,25 @@
+workflows/repexprep.nf:57:                target_read_length: row.target_read_length
+subworkflows/local/length_normalization.nf:1:include { CHOOSE_TARGET_LENGTH } from '../../modules/local/choose_target_length/main'
+subworkflows/local/length_normalization.nf:2:include { CROP_FIXED_LENGTH }   from '../../modules/local/crop_fixed_length/main'
+subworkflows/local/length_normalization.nf:15:    CHOOSE_TARGET_LENGTH(ch_samples_keyed)
+subworkflows/local/length_normalization.nf:18:        .join(CHOOSE_TARGET_LENGTH.out.target_length)
+subworkflows/local/length_normalization.nf:23:    CROP_FIXED_LENGTH(ch_crop_input)
+subworkflows/local/length_normalization.nf:26:    target_lengths   = CHOOSE_TARGET_LENGTH.out.target_length
+subworkflows/local/length_normalization.nf:27:    normalized_reads = CROP_FIXED_LENGTH.out.reads
+subworkflows/local/length_normalization.nf:28:    crop_reports     = CROP_FIXED_LENGTH.out.report
+modules/local/crop_fixed_length/main.nf:1:process CROP_FIXED_LENGTH {
+modules/local/choose_target_length/main.nf:1:process CHOOSE_TARGET_LENGTH {
+modules/local/choose_target_length/main.nf:16:    def requested_length = meta.target_read_length ?: ""
+modules/local/choose_target_length/main.nf:19:    choose_target_length.py \
+bin/validate_samplesheet.py:22:    "target_read_length",
+bin/validate_samplesheet.py:231:            target_read_length = clean.get(
+bin/validate_samplesheet.py:232:                "target_read_length",
+bin/validate_samplesheet.py:236:            if target_read_length:
+bin/validate_samplesheet.py:238:                    target_read_length_value = int(
+bin/validate_samplesheet.py:239:                        target_read_length
+bin/validate_samplesheet.py:243:                        f"Row {row_number}: target_read_length "
+bin/validate_samplesheet.py:247:                if target_read_length_value <= 0:
+bin/validate_samplesheet.py:249:                        f"Row {row_number}: target_read_length "
+bin/choose_target_length.py:131:        f"[choose_target_length] sample={args.sample} "
+nextflow.config:24:    target_read_length       = null
+nextflow.config:25:    target_length_percentile = 95

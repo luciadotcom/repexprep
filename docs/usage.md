@@ -24,11 +24,11 @@ The current development samplesheet contains the following columns:
 | `fastq_1` | Yes | Path to the R1 FASTQ file |
 | `fastq_2` | Yes | Path to the R2 FASTQ file |
 | `organism` | Optional | Organism or project-specific taxon label |
-| `genome_size_bp` | Optional | Estimated haploid genome size in base pairs |
-| `ploidy` | Optional | Ploidy used by the coverage calculation. Must be a positive integer if provided |
-| `organelle_fasta` | Conditional | Organelle reference FASTA. Required if organelle filtering is enabled |
+| `genome_size_bp` | Optional: Required for coverage planning | Estimated haploid genome size in base pairs |
+| `ploidy` | Optional: Required for coverage planning | Expected ploidy level. Must be a positive integer if provided |
+| `organelle_fasta` | Conditional: Required if organelle filtering is enabled | Organelle reference FASTA. |
 | `target_coverage` | Optional | Desired low-pass coverage. Defaults to global (0.2) if omitted |
-| `target_read_length` | Optional | Requested normalized read length |
+| `target_read_length` | Optional | Requested normalized read length. When operation in global modes, this column may remain empty |
 
 ## Local execution
 
@@ -41,6 +41,34 @@ The verified local baseline command is documented in:
 The verified MetaCentrum command is documented in:
 
 `docs/baseline/metacentrum_execution.md`
+
+## Read-lengths normalization modes
+
+### Automatic comparative mode
+
+```bash
+nextflow run . \
+    --input samplesheet.csv \
+    --target_length_mode global_auto \
+    --min_retained_fraction 0.95
+```
+### Fixed comparative mode
+
+Example in which all sampkles are cropped to 100bp. 
+
+```bash
+nextflow run . \
+    --input samplesheet.csv \
+    --target_length_mode global_fixed \
+    --target_read_length 100
+```
+### Independent per-sample mode
+
+```bash
+nextflow run . \
+    --input samplesheet.csv \
+    --target_length_mode per_sample
+```
 
 ## Development status
 

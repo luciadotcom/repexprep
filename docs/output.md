@@ -25,12 +25,30 @@ Paired reads retained after removing organelle-matching reads, along with deplet
 * `fastq/`: Organelle-depleted paired-end FASTQ files.
 * `reports/`: Filtering statistics and alignment logs.
 
-### Read-length normalization
+(((((((
+
+    ## Read-length selection reports
+
+The pipeline will produce:
+
+- one read-length profile per sample;
+- one dataset-wide target-length report in global modes;
+- one table showing expected or observed retention per sample;
+- one cropping report per sample.
+
+In comparative modes, all final FASTA files must report the same target
+read length.
+    
+    ### Read-length normalization
 
 Paired reads normalized to the requested target length can be found in **`results/<sample_id>/length_normalization/cropped_reads/`**.
 Additionally, within the `length_normalization/` folder, you can access:
 * `reports/`: Trimming/cropping process execution logs.
 * `target_length/`: Selected or calculated target length per sample.
+
+)))))))
+
+
 
 ### Coverage planning and sampling
 

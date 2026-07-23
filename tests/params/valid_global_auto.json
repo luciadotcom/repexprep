@@ -1,0 +1,8 @@
+{
+  "input": "tests/samplesheets/valid_minimal.csv",
+  "outdir": "results/test_global_auto",
+  "target_length_mode": "global_auto",
+  "min_retained_fraction": 0.95,
+  "min_target_read_length": 100,
+  "max_target_read_length": 200
+}

@@ -1,0 +1,6 @@
+{
+  "input": "tests/samplesheets/valid_minimal.csv",
+  "outdir": "results/test_global_fixed",
+  "target_length_mode": "global_fixed",
+  "target_read_length": 100
+}

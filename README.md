@@ -46,6 +46,10 @@ baseline-local-hpc-orgfilter-2026-07-20
 ```
 This tag represents a functional development baseline, not a stable public release.
 
+A dataset-wide read-length selection architecture has been accepted and
+is awaiting implementation. The current functional baseline is retained
+for equivalence testing.
+
 ## Workflow overview
 
 1. **Samplesheet validation**.- Validate the input CSV samplesheet and resolve file paths. Module involved: *VALIDATE_SAMPLESHEET*
@@ -117,12 +121,12 @@ be used on different systems.
 | `sample` | Yes | Unique sample identifier |
 | `fastq_1` | Yes | Path to the R1 FASTQ file |
 | `fastq_2` | Yes | Path to the R2 FASTQ file |
-| `organism` | No | Organism name |
-| `genome_size_bp`| Conditional: Required for coverage planning | Estimated haploid genome size in base pairs |
-| `ploidy` | Conditional: Required for coverage planning | Expected ploidy level |
-| `organelle_fasta` | Conditional: Required when organelle filtering is enabled | FASTA file containing chloroplast, mitochondrial, or combined organelle reference sequences |
-| `target_coverage` | Optional | Requested genome coverage |
-| `target_read_length` | No | Explicit normalized read length; it may be determined automatically when empty |
+| `organism` | Optional | Organism or project-specific taxon label |
+| `genome_size_bp` | Optional: Required for coverage planning | Estimated haploid genome size in base pairs |
+| `ploidy` | Optional: Required for coverage planning | Expected ploidy level. Must be a positive integer if provided |
+| `organelle_fasta` | Conditional: Required if organelle filtering is enabled | Organelle reference FASTA. |
+| `target_coverage` | Optional | Desired low-pass coverage. Defaults to global (0.2) if omitted |
+| `target_read_length` | Optional | Requested normalized read length. Might remain empty when operating in global modes |
 
 ## Quick start
 
@@ -185,13 +189,22 @@ nextflow run . \
 | `--input` | Path to the input samplesheet |
 | `--outdir` | Output directory |
 | `--skip_organelle_filter` | Skip organelle filtering when set to `true` |
+| `--target_length_mode` | Select the trimming method that fits better post hoc sample analysis |
 | `--help` | Display the pipeline help message |
 
 Additional parameters are defined in:
-
 ```text
 nextflow_schema.json
 ```
+### Target length mode clarification
+
+- **Global modes**: select for multispecies comparative analyses:
+    - **Global_auto**: a single target read length is calculated for the complete dataset and applied to all samples.
+    - **Global_fixed**: the user supplies an explicit value to which every sample of the dataset will be cropped. 
+- **Per-sample mode**: individual sample analysis. Each sample is trimmed to an individually-targetted length.Each sample obtains its own target length.*Not advisable for comparative analysis in RepeatExplorer*
+
+Additional information is explicited in `docs/architecture/ADR-001-target-read-length.md` and `docs/architecture/samplesheet_contract.md`. 
+
 
 ## Organelle references
 
@@ -258,8 +271,7 @@ status = PASS
   first stable release.
 - Container support has not yet been finalized.
 - Testing has so far focused on four subsampled *Carex* datasets.
-- The full dataset has not yet been used for systematic performance
-  benchmarking.
+- The full dataset has not yet been used for systematic performance benchmarking.
 - Organelle-reference provenance still requires complete documentation.
 - The pipeline is not yet fully compliant with nf-core guidelines.
 
@@ -272,7 +284,8 @@ Planned developments include:
 - testing with the complete dataset;
 - improved automated testing;
 - progressive alignment with nf-core guidelines;
-- filling out the conf/modules.config with all the publishDir routes to easily change the result tree.
+- filling out the conf/modules.config with all the publishDir routes to easily change the result tree;
+- integration of the ploidy data into de plan_coverage.py script to normalize coverage taking into account chromosomal sets. 
 
 ## Documentation
 
