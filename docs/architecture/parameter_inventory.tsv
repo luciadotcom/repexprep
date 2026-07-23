@@ -1,0 +1,11 @@
+| parameter | type | required | default | scope | description | validation |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| `input` | path | yes | null | global | Path to input samplesheet | Must exist and not be null |
+| `outdir` | path | no | results | global | Output directory | Non-empty path |
+| `test_mode` | boolean | no | false | global | Enable test mode configuration | true or false |
+| `target_coverage` | number | conditional | 0.2 | global_or_sample | Target coverage for sampling | Must be > 0 (fallback to 0.2 if null) |
+| `target_read_length` | integer | no | null | global_or_sample | Fixed read length for cropping | Integer > 0 |
+| `target_length_percentile` | integer | no | 95 | global | Percentile for target read length selection | Integer between 1 and 100 |
+| `genome_size_bp` | integer | conditional | null | global_or_sample | Genome size in base pairs | Required if not in samplesheet |
+| `sampling_seed` | integer | no | 42 | global | Random seed for subsampling | Integer >= 0 |
+| `skip_organelle_filter` | boolean | no | false | global | Skip organelle DNA filtering | true or false |

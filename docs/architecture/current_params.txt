@@ -1,0 +1,8 @@
+params.genome_size_bp
+params.input
+params.outdir
+params.sampling_seed
+params.skip_organelle_filter
+params.target_coverage
+params.test_mode
+params.target_length_percentile
