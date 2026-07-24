@@ -46,6 +46,39 @@ Additionally, within the `length_normalization/` folder, you can access:
 * `reports/`: Trimming/cropping process execution logs.
 * `target_length/`: Selected or calculated target length per sample.
 
+    ## Read-length normalization outputs
+
+    ### Per-sample profile
+
+`*.read_length_profile.tsv`
+
+Contains the observed paired-read length range, candidate target length,
+expected retained pairs and expected retained fraction.
+
+### Dataset-wide target
+
+`global_target_length.tsv`
+
+Contains the selected execution mode and the single target length used
+for the dataset.
+
+### Per-sample target report
+
+`target_length_per_sample.tsv`
+
+Compares every sample candidate with the dataset-wide target and
+identifies the sample limiting automatic selection.
+
+### Crop report
+
+`*.crop_report.tsv`
+
+Contains input pairs, retained pairs, discarded pairs, final target
+length and retained fraction.
+
+In global comparative modes, every final FASTQ and downstream FASTA
+must contain reads cropped to the same target length.
+
 )))))))
 
 

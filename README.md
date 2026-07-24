@@ -46,9 +46,17 @@ baseline-local-hpc-orgfilter-2026-07-20
 ```
 This tag represents a functional development baseline, not a stable public release.
 
-A dataset-wide read-length selection architecture has been accepted and
-is awaiting implementation. The current functional baseline is retained
-for equivalence testing.
+Dataset-wide read-length normalization has been implemented for
+comparative RepeatExplorer analyses.
+
+The current implementation supports:
+
+- `global_auto`: calculates one robust target for the complete dataset;
+- `global_fixed`: applies one user-supplied target to all samples.
+
+Both modes have been smoke-tested with two paired-end samples. The
+`per_sample` mode remains planned but is not currently exposed as a supported execution mode.
+
 
 ## Workflow overview
 

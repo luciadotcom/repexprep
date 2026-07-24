@@ -69,6 +69,9 @@ nextflow run . \
     --input samplesheet.csv \
     --target_length_mode per_sample
 ```
+***The per_sample mode is not yet implemented in the executable
+workflow. Per-sample target_read_length values are rejected in global
+modes.***
 
 ## Development status
 
