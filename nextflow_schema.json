@@ -68,8 +68,7 @@
           "type": "string",
           "enum": [
             "global_auto",
-            "global_fixed",
-            "per_sample"
+            "global_fixed"
           ],
           "default": "global_auto",
           "description": "Strategy used to select the read length applied before RepeatExplorer export."
