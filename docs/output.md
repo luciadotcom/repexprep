@@ -19,6 +19,7 @@ Reports describing FASTQ integrity, read counts, and paired-end consistency can 
 * `fastq_stats/`: Summary statistics of raw FASTQ files.
 * `pair_audit/`: Integrity and pairing consistency logs.It records whether R1 and R2 contain the same number of reads, identifiers correspond, record order is synchronised, malformed or incomplete records were detected and the sample passed or failed the audit.
 * `fastqc/`: within there are both .html and .zip files of each of the samples analyzed. The HTML file is intended for visual inspection. The ZIP file contains the underlying FastQC data and module results. Quality reports.
+* `seqkit_stats/`: tab-separated summary of the raw FASTQ files, including sequence counts, total bases and read-length statistics.
 
 ### Organelle filtering
 

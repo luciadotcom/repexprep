@@ -57,12 +57,14 @@ The current implementation supports:
 Both modes have been smoke-tested with two paired-end samples. The
 `per_sample` mode remains planned but is not currently exposed as a supported execution mode.
 
+General FASTQ statistics are generated with the nf-core `seqkit/stats` module.FASTQC generates diagnostic quality reports. The custom `pair_audit.py` script validates paired-read integrity and synchronisation.
+
 
 ## Workflow overview
 
 1. **Samplesheet validation**.- Validate the input CSV samplesheet and resolve file paths. Module involved: *VALIDATE_SAMPLESHEET*
 2. **Parallel raw QC and pair audit**.-
-    2.1. Calculate raw FASQ statistics. Module involved: *RAW_FASTQ_STATS*
+    2.1. Calculate raw FASQ statistics. Module involved: standarized nf-core module *SeqKit stats*. Previously, *RAW_FASTQ_STATS* (currently in `legacy`).
     2.2. Audit paired-end FASTQ integrity and read-pairing consistency. Module involved: *PAIR_AUDIT*
     2.3.Qualiy control per-file. Module involved: *FASTQC*
 3. **Organelle filtering**.- Remove read pairs matching chloroplast or mitochondrial reference sequences. Module involved:*ORGANELLE_FILTER*

@@ -1,0 +1,16 @@
+ {
+  "name": "laynez-21-repexprep",
+  "homePage": "https://github.com/laynez-21-repexprep",
+  "repos": {
+    "https://github.com/nf-core/modules.git": {
+      "modules": {
+        "nf-core": {
+          "seqkit/stats": {
+            "branch": "master",
+            "git_sha": "main"
+          }
+        }
+      }
+    }
+  }
+}

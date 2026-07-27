@@ -17,6 +17,8 @@ workflow REPEXPREP {
 
     main:
 
+    ch_versions = Channel.empty()
+
     log.info ""
     log.info "=============================================="
     log.info " laynez-21-repexprep"
@@ -75,9 +77,10 @@ workflow REPEXPREP {
      * Raw FASTQ statistics, pair audit and FastQC visual reports.
      */
     READ_QC(ch_samples)
+    ch_versions = ch_versions.mix(READ_QC.out.versions)
 
-    READ_QC.out.stats.view { sm, stats_file ->
-        "Raw FASTQ stats: ${sm.id} | ${stats_file}"
+    READ_QC.out.stats_seqkit.view { sm, seqkit_file ->
+        "SeqKit stats: ${sm.id} | ${seqkit_file}"
     }
 
     READ_QC.out.pair_audit.view { sm, audit_file ->
@@ -87,7 +90,6 @@ workflow REPEXPREP {
     READ_QC.out.fastqc_html.view { sm, html_file ->
         "FastQC HTML report: ${sm.id} | ${html_file}"
     }
-
     /*
     *Step 4: filter out organelles's DNA
     */
@@ -169,11 +171,10 @@ workflow REPEXPREP {
 
     emit:
     samples             = ch_samples
-    raw_fastq_stats     = READ_QC.out.stats
-    pair_audit          = READ_QC.out.pair_audit
-    fastqc_html                = READ_QC.out.fastqc_html
-    fastqc_zip                 = READ_QC.out.fastqc_zip
-    versions                   = READ_QC.out.versions
+    stats_seqkit             = READ_QC.out.stats_seqkit
+    pair_audit               = READ_QC.out.pair_audit
+    fastqc_html              = READ_QC.out.fastqc_html
+    fastqc_zip               = READ_QC.out.fastqc_zip
     organelle_filtered_reads   = ORGANELLE_FILTERING.out.filtered_samples
     organelle_filter_reports   = ORGANELLE_FILTERING.out.reports
     target_lengths      = LENGTH_NORMALIZATION.out.global_target
