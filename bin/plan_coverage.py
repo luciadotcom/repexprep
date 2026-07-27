@@ -34,7 +34,13 @@ def read_target_length(path: str) -> int:
     if len(rows) != 1:
         raise ValueError(f"Expected exactly one row in target length file: {path}")
 
-    return int(rows[0]["target_length"])
+    row = rows[0]
+    possible_keys = ['global_target_length', 'target_length', 'target_read_length', 'selected_length']
+
+    for key in possible_keys:
+        if key in row:
+            return int(row[key])
+    raise KeyError(f"None of the expected target length keys {possible_keys} were found in header: {list(row.keys())}") 
 
 
 def parse_positive_int(value: str, name: str) -> int:

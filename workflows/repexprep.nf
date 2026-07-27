@@ -72,16 +72,20 @@ workflow REPEXPREP {
 
     /*
      * Step 3:
-     * Raw FASTQ statistics and pair audit.
+     * Raw FASTQ statistics, pair audit and FastQC visual reports.
      */
     READ_QC(ch_samples)
 
-    READ_QC.out.raw_fastq_stats.view { sm, stats_file ->
+    READ_QC.out.stats.view { sm, stats_file ->
         "Raw FASTQ stats: ${sm.id} | ${stats_file}"
     }
 
     READ_QC.out.pair_audit.view { sm, audit_file ->
         "Pair audit: ${sm.id} | ${audit_file}"
+    }
+
+    READ_QC.out.fastqc_html.view { sm, html_file ->
+        "FastQC HTML report: ${sm.id} | ${html_file}"
     }
 
     /*
@@ -91,21 +95,28 @@ workflow REPEXPREP {
     ORGANELLE_FILTERING(ch_samples)
 
     ORGANELLE_FILTERING.out.reports.view { sm, report_file ->
-    "Organelle filter report: ${sm.id} | ${report_file}"
-}
+        "Organelle filter report: ${sm.id} | ${report_file}"
+    }
 
     ORGANELLE_FILTERING.out.filtered_samples.view { sm, reads ->
-    "Organelle-filtered reads: ${sm.id} | R1=${reads[0]} | R2=${reads[1]}"
-}
+        "Organelle-filtered reads: ${sm.id} | R1=${reads[0]} | R2=${reads[1]}"
+    }
 
     /*
      * Step 5:
      * Choose target length and crop reads to fixed length.
      */
-    LENGTH_NORMALIZATION(ORGANELLE_FILTERING.out.filtered_samples)
+    LENGTH_NORMALIZATION(
+        ORGANELLE_FILTERING.out.filtered_samples,
+        params.target_length_mode,
+        params.target_read_length,
+        params.min_retained_fraction,
+        params.min_target_read_length,
+        params.max_target_read_length
+        )
 
-    LENGTH_NORMALIZATION.out.target_lengths.view { sample_id, sm, target_file ->
-        "Target length: ${sm.id} | ${target_file}"
+    LENGTH_NORMALIZATION.out.global_target.view { target_file ->
+        "Target length: ${target_file}"
     }
 
     LENGTH_NORMALIZATION.out.normalized_reads.view { sm, reads ->
@@ -122,11 +133,11 @@ workflow REPEXPREP {
      */
     COVERAGE_SAMPLING(
         LENGTH_NORMALIZATION.out.normalized_reads,
-        LENGTH_NORMALIZATION.out.target_lengths
+        LENGTH_NORMALIZATION.out.global_target
     )
 
-    COVERAGE_SAMPLING.out.coverage_plans.view { sample_id, sm, plan_file ->
-        "Coverage plan: ${sm.id} | ${plan_file}"
+    COVERAGE_SAMPLING.out.coverage_plans.view { plan_file ->
+        "Coverage plan: ${plan_file}"
     }
 
     COVERAGE_SAMPLING.out.sampled_reads.view { sm, reads ->
@@ -158,11 +169,14 @@ workflow REPEXPREP {
 
     emit:
     samples             = ch_samples
-    raw_fastq_stats     = READ_QC.out.raw_fastq_stats
+    raw_fastq_stats     = READ_QC.out.stats
     pair_audit          = READ_QC.out.pair_audit
+    fastqc_html                = READ_QC.out.fastqc_html
+    fastqc_zip                 = READ_QC.out.fastqc_zip
+    versions                   = READ_QC.out.versions
     organelle_filtered_reads   = ORGANELLE_FILTERING.out.filtered_samples
     organelle_filter_reports   = ORGANELLE_FILTERING.out.reports
-    target_lengths      = LENGTH_NORMALIZATION.out.target_lengths
+    target_lengths      = LENGTH_NORMALIZATION.out.global_target
     normalized_reads    = LENGTH_NORMALIZATION.out.normalized_reads
     crop_reports        = LENGTH_NORMALIZATION.out.crop_reports
     coverage_plans      = COVERAGE_SAMPLING.out.coverage_plans

@@ -64,6 +64,7 @@ Both modes have been smoke-tested with two paired-end samples. The
 2. **Parallel raw QC and pair audit**.-
     2.1. Calculate raw FASQ statistics. Module involved: *RAW_FASTQ_STATS*
     2.2. Audit paired-end FASTQ integrity and read-pairing consistency. Module involved: *PAIR_AUDIT*
+    2.3.Qualiy control per-file. Module involved: *FASTQC*
 3. **Organelle filtering**.- Remove read pairs matching chloroplast or mitochondrial reference sequences. Module involved:*ORGANELLE_FILTER*
 4. **Read-length planning**.- Determine the target read-length across samples. Module involved: *CHOOSE_TARGET_LENGTH*
 5. **Read trimming**.- Crop paired reads to the exact target fixed length. Module involved: *CROP_FIXED_LENGTH*

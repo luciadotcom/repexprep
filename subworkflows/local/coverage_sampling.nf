@@ -9,21 +9,26 @@ workflow COVERAGE_SAMPLING {
 
     main:
 
-    ch_norm_keyed = normalized_reads.map { sample_meta, reads ->
-        tuple(sample_meta.id, sample_meta, reads)
-    }
-
-    ch_plan_input = ch_norm_keyed
-        .join(target_lengths)
-        .map { sample_id, sample_meta, reads, target_meta, target_length_tsv ->
-            tuple(sample_id, sample_meta, reads, target_length_tsv)
+    ch_plan_input = normalized_reads
+        .combine(target_lengths)
+        .map { sample_meta, reads, target_length_tsv ->
+            tuple(sample_meta, reads, target_length_tsv)
         }
 
     PLAN_COVERAGE(ch_plan_input)
 
-    ch_sample_input = ch_plan_input
-        .join(PLAN_COVERAGE.out.plan)
-        .map { sample_id, sample_meta, reads, target_length_tsv, plan_meta, coverage_plan ->
+    ch_sample_input = normalized_reads
+        .map { meta, reads -> tuple(meta.id, meta, reads) }
+        .join(
+            PLAN_COVERAGE.out.plan.map { item ->
+                if (item instanceof List && item[0] instanceof Map) {
+                    return tuple(item[0].id, item[0], item[1])
+                } else {
+                    return item
+                }
+            }
+        )
+        .map { sample_id, sample_meta, reads, plan_meta, coverage_plan ->
             tuple(sample_meta, reads, coverage_plan)
         }
 

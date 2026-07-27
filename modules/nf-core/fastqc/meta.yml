@@ -1,0 +1,42 @@
+name: "fastqc"
+description: Run FastQC on sequencing reads to perform quality control analysis
+keywords:
+  - quality control
+  - qc
+  - fastq
+tools:
+  - "fastqc":
+      description: "FastQC is a program designed to provide a quality control check on raw sequence data coming from high throughput sequencing pipelines."
+      homepage: "https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"
+      documentation: "https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/"
+      tool_dev_url: "https://github.com/s-andrews/FastQC"
+      doi: ""
+      licence: "['GPL v3 or later']"
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - reads:
+      type: file
+      description: |
+        List of input FastQ files of size 1 and 2 for single-end and paired-end data respectively.
+
+output:
+  - html:
+      type: file
+      description: FastQC report HTML file
+      pattern: "*_fastqc.html"
+  - zip:
+      type: file
+      description: FastQC report ZIP file containing data and plots
+      pattern: "*_fastqc.zip"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@lucialaynez"
