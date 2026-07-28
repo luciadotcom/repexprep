@@ -4,7 +4,7 @@ process CROP_FIXED_LENGTH {
     label 'process_low'
 
     input:
-    tuple val(meta), path(reads), path(global_target)
+    tuple val(meta), path(in_reads), path(global_target)
 
     output:
     tuple val(meta), path("${prefix}.cropped_R*.fastq.gz"),
@@ -17,14 +17,16 @@ process CROP_FIXED_LENGTH {
         emit: versions
 
     script:
-    if (reads.size() != 2) {
+    def read_files = in_reads instanceof List ? in_reads : [in_reads]
+
+    if (read_files.size() != 2) {
         error(
             "CROP_FIXED_LENGTH expects exactly two FASTQ files " +
-            "for sample '${meta.id}', but received ${reads.size()}."
+            "for sample '${meta.id}', but received ${read_files.size()}."
         )
     }
 
-    def sorted_reads = reads.sort {
+    def sorted_reads = read_files.sort {
         first, second ->
             first.name <=> second.name
     }
@@ -50,4 +52,4 @@ process CROP_FIXED_LENGTH {
         crop_fixed_length: "0.1.0"
     END_VERSIONS
     """
-} 
+}
