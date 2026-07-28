@@ -3,13 +3,17 @@ nextflow.enable.dsl = 2
 /*
  * main.nf
  *
- * Workflow entrypoint.  Punto de entrada del pipeline.
- * Small file. Here we only activate DSL2 and import the main workflow (in other words, REPEX is called here).
+ * Workflow entrypoint. 
  *
  */
 
 include { REPEXPREP } from './workflows/repexprep'
+include { REPEXANALYSIS } from './workflows/repexanalysis'
 
 workflow {
     REPEXPREP()
+
+    if (params.run_repeatexplorer) {
+        REPEXANALYSIS ( REPEXPREP.out.repex_fasta )
+    }
 }
