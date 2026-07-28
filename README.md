@@ -19,13 +19,14 @@ flowchart TD
     C --> E[PAIR_AUDIT]
     C --> F[ORGANELLE_FILTER]
 
-    F --> G[CHOOSE_TARGET_LENGTH]
-    G --> H[CROP_FIXED_LENGTH]
-    H --> I[PLAN_COVERAGE]
-    I --> J[SAMPLE_PAIRS]
-    J --> K[RENAME_FASTQ_TO_FASTA]
-    K --> L[VALIDATE_REPEX_FASTA]
-    L --> M[Accepted RepeatExplorer FASTA]
+    F --> G[PROFILE_LENGTH]
+    G --> H[SELECT_GLOBAL_TARGET_LENGTH]
+    H --> I[CROP_FIXED_LENGTH]
+    I --> J[PLAN_COVERAGE]
+    J --> K[SAMPLE_PAIRS]
+    K --> L[RENAME_FASTQ_TO_FASTA]
+    L --> M[VALIDATE_REPEX_FASTA]
+    M --> N[Accepted RepeatExplorer FASTA]
 ```
 
 ## Current status
