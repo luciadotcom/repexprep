@@ -4,6 +4,8 @@ process ORGANELLE_FILTER {
 
     label 'process_medium'
 
+    container 'https://depot.galaxyproject.org/singularity/mulled-v2-6650c7f18ff69c36236b280f2d609a3d13264b97:543e33c6833418e697d02a5c36eb971f1141d668-0'
+
     publishDir "${params.outdir}/organelle_filter/fastq", mode: 'copy', pattern: "*.organelle_filtered.fastq.gz"
     publishDir "${params.outdir}/organelle_filter/reports", mode: 'copy', pattern: "*.organelle_filter_report.tsv"
 
