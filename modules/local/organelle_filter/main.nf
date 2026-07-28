@@ -4,7 +4,7 @@ process ORGANELLE_FILTER {
 
     label 'process_medium'
 
-    container 'quay.io/biocontainers/mulled-v2-6650c7f18ff69c36236b280f2d609a3d13264b97:543e33c6833418e697d02a5c36eb971f1141d668-0'
+    container 'https://depot.galaxyproject.org/singularity/mulled-v2-a97e90b3b802d1da3d630d04fbafd7235087c2b0:280327f2c9748b9f1d2ed91ef5202613d50fb97a-0'
 
     publishDir "${params.outdir}/organelle_filter/fastq", mode: 'copy', pattern: "*.organelle_filtered.fastq.gz"
     publishDir "${params.outdir}/organelle_filter/reports", mode: 'copy', pattern: "*.organelle_filter_report.tsv"
