@@ -150,6 +150,37 @@ The later `CROP_FIXED_LENGTH` process is not considered quality
 trimming. It applies a common read length selected for comparative
 analysis.
 
+## Organelle references
+
+### **Arabidopsis thaliana**
+
+- *File*: `org_reference/combined/a_thaliana_combined_orgs.fasta`
+- *Number of sequences*: 2
+- *Total length*: 522,286 bp
+- *SHA-256*: a4dc6bd89e88975f5be6b7c69224f234b64ca14f78bfb39ff0e72fbd5e823470
+- *Source*: NCBI RefSeq (NC_000932.1, NC_037304.1)
+- *Organelles represented*: Chloroplast (complete genome, 154,478 bp) and Mitochondrion (ecotype Col-0, complete genome, 367,808 bp)
+
+### **Carex** genus
+
+- *File*: `org_reference/combined/carex_combined_orgs.fasta`
+- *Number of sequences*: 2
+- *Total length*: 1,598,952 bp
+- *SHA-256*: 7e0fa5aecdd2b36dfab8529e36dc6aa9b9202eac1c91d00d5f25dda2918936de
+- *Source*: GenBank / NCBI RefSeq (MT795185.1, NC_068626.1)
+- *Organelles represented*: Chloroplast (Carex agglomerata, complete genome, 184,157 bp) and Mitochondrion (Carex breviculmis, complete genome, 1,414,795 bp)
+
+### **Oryza sativa**
+
+- *File*: `org_reference/combined/o_sativa_combined_orgs.fasta`
+- *Number of sequences*: 2
+- *Total length*: 625,045 bp
+- *SHA-256*: 2a6c9c33d5232d26cccd307752261ec962e167254485ee9c949a1ff8f316a1f7
+- *Source*: NCBI RefSeq (NC_001320.1, NC_011033.1)
+- *Organelles represented*: Plastid (Oryza sativa Japonica Group, complete genome, 134,525 bp) and Mitochondrion (Oryza sativa Japonica Group, complete genome, 490,520 bp)
+
+
+
 ## Development status
 
 The command-line interface and parameters may change before version 1.0.0.
