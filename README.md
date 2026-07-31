@@ -234,8 +234,7 @@ The current combined references include:
 - *Carex*, represented by *Carex agglomerata* chloroplast sequences and
   *Carex breviculmis* mitochondrial sequences.
 
-The provenance, accession numbers, and construction of the combined
-reference files still require complete documentation.
+Additional information about the sequences can be found in `docs/usage.md`. 
 
 ## Output structure
 
