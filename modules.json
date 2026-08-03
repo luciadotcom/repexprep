@@ -1,13 +1,48 @@
- {
+{
   "name": "laynez-21-repexprep",
   "homePage": "https://github.com/laynez-21-repexprep",
   "repos": {
     "https://github.com/nf-core/modules.git": {
       "modules": {
         "nf-core": {
+          "custom/sratoolsncbisettings": {
+            "branch": "master",
+            "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
+            "installed_by": ["fastq_download_prefetch_fasterqdump_sratools"]
+          },
+          "fastp": {
+            "branch": "master",
+            "git_sha": "2c70c1c1951aaf884d2e8d8d9c871db79f7b35aa",
+            "installed_by": ["modules"]
+          },
+          "fastqc": {
+            "branch": "master",
+            "git_sha": "49b18b1639f4f7104187058866a8fab33332bdfe",
+            "installed_by": ["modules"]
+          },
           "seqkit/stats": {
             "branch": "master",
-            "git_sha": "main"
+            "git_sha": "main",
+            "installed_by": ["modules"]
+          },
+          "sratools/fasterqdump": {
+            "branch": "master",
+            "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
+            "installed_by": ["fastq_download_prefetch_fasterqdump_sratools"]
+          },
+          "sratools/prefetch": {
+            "branch": "master",
+            "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
+            "installed_by": ["fastq_download_prefetch_fasterqdump_sratools"]
+          }
+        }
+      },
+      "subworkflows": {
+        "nf-core": {
+          "fastq_download_prefetch_fasterqdump_sratools": {
+            "branch": "master",
+            "git_sha": "8e6139dbf4f3ca01bbac6152d2833e04edff18df",
+            "installed_by": ["subworkflows"]
           }
         }
       }
