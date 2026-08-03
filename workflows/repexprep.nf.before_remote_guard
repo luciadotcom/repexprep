@@ -47,52 +47,16 @@ workflow REPEXPREP {
         .splitCsv(header: true)
         .map { row ->
 
-            /*
-             * Temporary source routing.
-             * Local FASTQ inputs may continue into READ_QC.
-             * Accession inputs are structurally valid, but FETCH_READS
-             * has not been implemented yet.
-             */
-            def source = row.source?.trim() ?: "local"
-
-            if (source == "accession") {
-                error """
-ERROR [remote_input]:
-Sample '${row.sample}' uses source='accession', but remote read
-acquisition has not been implemented yet.
-
-FETCH_READS must produce real paired FASTQ files before this sample
-can enter READ_QC.
-""".stripIndent().trim()
-            }
-
-            if (source != "local") {
-                error """
-ERROR [input_source]:
-Sample '${row.sample}' has unsupported source='${source}'.
-Accepted values are currently: local, accession.
-""".stripIndent().trim()
-            }
-
             def sample_meta = [
-                id                  : row.sample,
-                sample              : row.sample,
-                source              : source,
-                provider            : row.provider ?: "local",
-                accession           : row.accession ?: null,
-                lane                : row.lane,
-                organism            : row.organism,
-                genome_size_1C_bp   : row.genome_size_1C_bp
-                    ? row.genome_size_1C_bp as Long
-                    : (row.genome_size_bp ? row.genome_size_bp as Long : null),
-                ploidy              : row.ploidy
-                    ? row.ploidy as Integer
-                    : null,
-                organelle_fasta     : row.organelle_fasta,
-                target_coverage     : row.target_coverage
-                    ? row.target_coverage as Double
-                    : null,
-                target_read_length  : row.target_read_length
+                id                : row.sample,
+                sample            : row.sample,
+                lane              : row.lane,
+                organism          : row.organism,
+                genome_size_1C_bp : row.genome_size_1C_bp ?: row.genome_size_bp,
+                ploidy            : row.ploidy,
+                organelle_fasta   : row.organelle_fasta,
+                target_coverage   : row.target_coverage,
+                target_read_length: row.target_read_length
             ]
 
             tuple(

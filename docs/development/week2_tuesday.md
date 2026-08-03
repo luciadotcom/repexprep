@@ -173,3 +173,45 @@ After local files are resolved or remote reads are downloaded, both
 routes must converge on the same downstream contract:
 
 tuple val(meta), path([fastq_1, fastq_2])
+
+## Unified samplesheet implementation
+
+### Supported sources
+
+- `local`
+- `accession`
+
+### Supported providers
+
+- `local`
+- `auto`
+- `ena`
+- `ncbi_sra`
+
+### Validation behaviour
+
+Local rows require paired FASTQ paths and reject accessions.
+
+Accession rows require a run accession and provider and reject local
+FASTQ paths.
+
+### Current limitation
+
+Remote accessions are validated but are not yet materialised into FASTQ.
+The forthcoming `FETCH_READS` subworkflow will convert accession rows
+into the same `meta + [R1, R2]` contract used by local inputs.
+
+Until `FETCH_READS` is implemented, accession rows stop after validation
+with an explicit `ERROR [remote_input]` message and do not enter
+`READ_QC`.
+
+### Tests
+
+| Fixture | Expected | Observed |
+|---|---|---|
+| `valid_local_unified.csv` | PASS | PASS end-to-end |
+| `valid_accession_unified.csv` | PASS validation | PASS validation; stopped intentionally before `READ_QC` |
+| `valid_mixed_unified.csv` | PASS validation | PASS validation; remote row stopped intentionally |
+| `invalid_local_and_accession.csv` | FAIL | Not tested yet |
+| `invalid_accession_missing_provider.csv` | FAIL | Not tested yet |
+| `invalid_ploidy.csv` | FAIL | Not tested yet |

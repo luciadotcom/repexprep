@@ -9,26 +9,26 @@ workflow ORGANELLE_FILTERING {
     ORGANELLE_FILTER(samples)
 
     method_metadata = ORGANELLE_FILTER.out.method_record
-        .map { _meta, record ->
+        .map { meta, record ->
             record.text.trim()
         }
         .unique()
         .collectFile(
             name: 'organelle_filter_method_metadata.tsv',
-            seed: 'filtering_method\tpair_removal_rule\tminimap2_parameters\tsamtools_required_flags\tsamtools_excluded_flags\tminimap2_version\tsamtools_version',
+            seed: 'filtering_method\tpair_removal_rule\tminimap2_parameters\tsamtools_required_flags\tsamtools_excluded_flags\tminimap2_version\tsamtools_version\n',
             newLine: true,
             sort: true,
             storeDir: "${params.outdir}/organelle_filter/metadata"
         )
 
     reference_registry = ORGANELLE_FILTER.out.reference_record
-        .map { _meta, record ->
+        .map { meta, record ->
             record.text.trim()
         }
         .unique()
         .collectFile(
             name: 'organelle_filter_reference_registry.tsv',
-            seed: 'reference_id\treference_fasta\treference_checksum_sha256',
+            seed: 'reference_id\treference_fasta\treference_checksum_sha256\n',
             newLine: true,
             sort: true,
             storeDir: "${params.outdir}/organelle_filter/metadata"

@@ -27,35 +27,26 @@ process ORGANELLE_FILTER {
           emit: report
 
     tuple val(meta),
-          path("*.organelle_method_record.tsv"),
-          emit: method_record
+      path("*.organelle_method_record.tsv"),
+      emit: method_record
 
     tuple val(meta),
-          path("*.organelle_reference_record.tsv"),
-          emit: reference_record,
-          optional: true
+      path("*.organelle_reference_record.tsv"),
+      emit: reference_record,
+      optional: true
 
     script:
     def sample_id = meta.id
-
     def org_ref_raw = meta.organelle_fasta
         ? meta.organelle_fasta.toString().trim()
         : ""
-
-    /*
-     * Convert a repository-relative reference path to an absolute path
-     * before constructing the Bash script.
-     *
-     * Absolute paths and explicit missing-value markers are retained.
-     */
     def org_ref = (
-        org_ref_raw &&
-        !["NA", "null", "."].contains(org_ref_raw) &&
-        !org_ref_raw.startsWith("/")
+    org_ref_raw &&
+    !["NA", "null", "."].contains(org_ref_raw) &&
+    !org_ref_raw.startsWith("/")
     )
         ? "${projectDir}/${org_ref_raw}"
         : org_ref_raw
-
     def skip = params.skip_organelle_filter ?: false
 
     """
@@ -92,6 +83,9 @@ process ORGANELLE_FILTER {
 
     # ------------------------------------------------------------
     # FASTQ record counter
+    #
+    # In addition to counting records, this verifies that the FASTQ
+    # contains complete four-line records.
     # ------------------------------------------------------------
 
     count_reads() {
@@ -128,27 +122,30 @@ process ORGANELLE_FILTER {
     INPUT_PAIRS="\$INPUT_R1_READS"
 
     # ------------------------------------------------------------
-    # Per-sample report header
+    # Report header
     # ------------------------------------------------------------
 
-    printf "sample\\treference_id\\tstatus\\tinput_r1_reads\\tinput_r2_reads\\tretained_r1_reads\\tretained_r2_reads\\tinput_pairs\\tretained_pairs\\tremoved_pairs\\tremoved_reads\\tretained_fraction\\tremoved_fraction\\tsync_status\\n" \
+    printf "sample\treference_id\tstatus\tinput_r1_reads\tinput_r2_reads\tretained_r1_reads\tretained_r2_reads\tinput_pairs\tretained_pairs\tremoved_pairs\tremoved_reads\tretained_fraction\tremoved_fraction\tsync_status\n" \
         > "\$REPORT"
 
     # ------------------------------------------------------------
     # Method metadata record
+    #
+    # One row is produced by every task. Identical rows will be
+    # deduplicated later in the ORGANELLE_FILTERING subworkflow.
     # ------------------------------------------------------------
 
-    MINIMAP2_VERSION=\$(
+    MINIMAP2_VERSION="$(
         minimap2 --version |
             head -n 1
-    )
+    )"
 
-    SAMTOOLS_VERSION=\$(
+    SAMTOOLS_VERSION="$(
         samtools --version |
-            awk 'NR == 1 { print \$2 }'
-    )
+         awk 'NR == 1 { print $2 }'
+    )"
 
-    printf "minimap2_samtools_fastq\\tremove_pair_if_either_mate_maps\\t-ax sr\\t12\\t2304\\t%s\\t%s\\n" \
+    printf "minimap2_samtools_fastq\tremove_pair_if_either_mate_maps\t-ax sr\t12\t2304\t%s\t%s\n" \
         "\$MINIMAP2_VERSION" \
         "\$SAMTOOLS_VERSION" \
         > "\$METHOD_RECORD"
@@ -162,7 +159,7 @@ process ORGANELLE_FILTER {
         cp "\$R1" "\$OUT_R1"
         cp "\$R2" "\$OUT_R2"
 
-        printf "${sample_id}\\tNA\\tSKIPPED_BY_PARAM\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t0\\t0\\t1.000000\\t0.000000\\tPASS\\n" \
+        printf "${sample_id}\tNA\tSKIPPED_BY_PARAM\t%s\t%s\t%s\t%s\t%s\t%s\t0\t0\t1.000000\t0.000000\tPASS\n" \
             "\$INPUT_R1_READS" \
             "\$INPUT_R2_READS" \
             "\$INPUT_R1_READS" \
@@ -186,7 +183,7 @@ process ORGANELLE_FILTER {
         cp "\$R1" "\$OUT_R1"
         cp "\$R2" "\$OUT_R2"
 
-        printf "${sample_id}\\tNA\\tSKIPPED_NO_REFERENCE\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t0\\t0\\t1.000000\\t0.000000\\tPASS\\n" \
+        printf "${sample_id}\tNA\tSKIPPED_NO_REFERENCE\t%s\t%s\t%s\t%s\t%s\t%s\t0\t0\t1.000000\t0.000000\tPASS\n" \
             "\$INPUT_R1_READS" \
             "\$INPUT_R2_READS" \
             "\$INPUT_R1_READS" \
@@ -194,13 +191,16 @@ process ORGANELLE_FILTER {
             "\$INPUT_PAIRS" \
             "\$INPUT_PAIRS" \
             >> "\$REPORT"
-
         exit 0
     fi
 
     # ------------------------------------------------------------
-    # Validate the resolved organelle reference
+    # Resolve and validate the organelle reference
     # ------------------------------------------------------------
+
+    if [[ "\$ORG_REF" != /* ]]; then
+        ORG_REF="${projectDir}/\$ORG_REF"
+    fi
 
     if [[ ! -s "\$ORG_REF" ]]; then
         echo \
@@ -216,8 +216,8 @@ process ORGANELLE_FILTER {
 
     REFERENCE_ID="orgref_\${ORG_REF_SHA256:0:12}"
 
-    printf "%s\\t%s\\t%s\\n" \
-        "\$REFERENCE_ID" \
+    printf "%s\t%s\t%s\n" \
+     "\$REFERENCE_ID" \
         "\$ORG_REF" \
         "\$ORG_REF_SHA256" \
         > "\$REFERENCE_RECORD"
@@ -225,11 +225,12 @@ process ORGANELLE_FILTER {
     # ------------------------------------------------------------
     # Organelle filtering
     #
-    # samtools fastq -f 12:
-    # retain records where both the read and mate are unmapped
+    # -f 12:
+    #     retain alignments where both the read and its mate are
+    #     unmapped
     #
-    # samtools fastq -F 2304:
-    # exclude secondary and supplementary alignments
+    # -F 2304:
+    #     exclude secondary and supplementary alignments
     # ------------------------------------------------------------
 
     minimap2 \
@@ -307,10 +308,10 @@ process ORGANELLE_FILTER {
     fi
 
     # ------------------------------------------------------------
-    # Final per-sample report
+    # Final auditable report
     # ------------------------------------------------------------
 
-    printf "${sample_id}\\t%s\\tPASS\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\tPASS\\n" \
+    printf "${sample_id}\t%s\tPASS\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\tPASS\n" \
         "\$REFERENCE_ID" \
         "\$INPUT_R1_READS" \
         "\$INPUT_R2_READS" \

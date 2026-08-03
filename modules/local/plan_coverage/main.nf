@@ -13,11 +13,11 @@ process PLAN_COVERAGE {
     tuple val(meta), path("${meta.id}.coverage_plan.tsv"), emit: plan
 
     script:
-    def genome_size = meta.genome_size_bp ?: params.genome_size_bp
+    def genome_size = meta.genome_size_1C_bp ?: meta.genome_size_bp ?: params.genome_size_bp
     def target_cov  = meta.target_coverage  ?: params.target_coverage 
 
     if (!genome_size) {
-        error "ERROR [plan_coverage]: Missing genome size for sample '${meta.id}'. Specify 'genome_size_bp' in the samplesheet or pass '--genome_size_bp'."
+        error "ERROR [plan_coverage]: Missing 1C genome size for sample '${meta.id}'. Specify 'genome_size_1C_bp' in the samplesheet or pass '--genome_size_bp'."
     }
     if (!target_cov) {
         error "ERROR [plan_coverage]: Missing target coverage for sample '${meta.id}'. Specify 'target_coverage' in the samplesheet or pass '--target_coverage'."
