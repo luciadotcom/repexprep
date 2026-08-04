@@ -57,3 +57,39 @@ RESOLVE_REMOTE_PROVIDER
 - Local and remote channels are not yet merged.
 - Remote reads do not yet enter READ_QC.
 - MetaCentrum scratch requirements have not yet been calibrated
+
+## Unified read-channel implementation
+
+### Architecture
+
+```text
+validated samplesheet
+        ↓
+MATERIALIZE_READS
+       / \
+  local   accession
+    |         |
+    |     FETCH_READS
+    |         |
+    └────┬────┘
+         ↓
+ unified tuple(meta, [R1, R2])
+         ↓
+ FASTQ_INTEGRITY
+         ↓
+ FASTQC + SEQKIT_STATS + PAIR_AUDIT
+``` 
+All downstream processes receive tuple val(meta), path (reads). The source of the input is retained in metada but does not alter the QC, organelle filtering, normalisation or smapling logic. 
+
+## Required metadata preserved
+- id
+- sample
+- source
+- provider
+- resolved_provider
+- accession
+- organism
+- genome size_1C_bp
+- ploidy
+- target_coverage
+- organelle_fasta

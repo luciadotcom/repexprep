@@ -5,8 +5,9 @@
  */
 
 include { INPUT_CHECK }           from '../subworkflows/local/input_check'
+include { MATERIALIZE_READS }     from '../subworkflows/local/materialize_reads'
 include { READ_QC }               from '../subworkflows/local/read_qc'
-include { ORGANELLE_FILTERING }     from '../subworkflows/local/organelle_filter'
+include { ORGANELLE_FILTERING }   from '../subworkflows/local/organelle_filter'
 include { LENGTH_NORMALIZATION }  from '../subworkflows/local/length_normalization'
 include { COVERAGE_SAMPLING }     from '../subworkflows/local/coverage_sampling'
 include { REPEX_FORMATTING }      from '../subworkflows/local/repex_formatting'
@@ -40,69 +41,25 @@ workflow REPEXPREP {
     INPUT_CHECK(file(params.input))
 
     /*
-     * Step 2:
-     * Parse validated CSV into sample channel.
+    * Step 2:
+    * Materialize local or remote paired-end FASTQ files.
      */
-    ch_samples = INPUT_CHECK.out.validated_samplesheet
-        .splitCsv(header: true)
-        .map { row ->
+    validated_samplesheet_ch =
+        INPUT_CHECK.out.validated_samplesheet
 
-            /*
-             * Temporary source routing.
-             * Local FASTQ inputs may continue into READ_QC.
-             * Accession inputs are structurally valid, but FETCH_READS
-             * has not been implemented yet.
-             */
-            def source = row.source?.trim() ?: "local"
+    /*
+    * Empty dbGaP certificate input for public SRA accessions.
+    */
+    certificate_ch = Channel.value([])
 
-            if (source == "accession") {
-                error """
-ERROR [remote_input]:
-Sample '${row.sample}' uses source='accession', but remote read
-acquisition has not been implemented yet.
+    MATERIALIZE_READS(
+        validated_samplesheet_ch,
+        certificate_ch
+    )
 
-FETCH_READS must produce real paired FASTQ files before this sample
-can enter READ_QC.
-""".stripIndent().trim()
-            }
-
-            if (source != "local") {
-                error """
-ERROR [input_source]:
-Sample '${row.sample}' has unsupported source='${source}'.
-Accepted values are currently: local, accession.
-""".stripIndent().trim()
-            }
-
-            def sample_meta = [
-                id                  : row.sample,
-                sample              : row.sample,
-                source              : source,
-                provider            : row.provider ?: "local",
-                accession           : row.accession ?: null,
-                lane                : row.lane,
-                organism            : row.organism,
-                genome_size_1C_bp   : row.genome_size_1C_bp
-                    ? row.genome_size_1C_bp as Long
-                    : (row.genome_size_bp ? row.genome_size_bp as Long : null),
-                ploidy              : row.ploidy
-                    ? row.ploidy as Integer
-                    : null,
-                organelle_fasta     : row.organelle_fasta,
-                target_coverage     : row.target_coverage
-                    ? row.target_coverage as Double
-                    : null,
-                target_read_length  : row.target_read_length
-            ]
-
-            tuple(
-                sample_meta,
-                [
-                    file(row.fastq_1),
-                    file(row.fastq_2)
-                ]
-            )
-        }
+    ch_versions = ch_versions.mix (MATERIALIZE_READS.out.versions)
+   
+    ch_samples = MATERIALIZE_READS.out.reads
 
     ch_samples.view { sm, reads ->
         "Sample channel item: ${sm.id} | R1=${reads[0]} | R2=${reads[1]}"
@@ -130,7 +87,7 @@ Accepted values are currently: local, accession.
     *Step 4: filter out organelles's DNA
     */
 
-    ORGANELLE_FILTERING(ch_samples)
+    ORGANELLE_FILTERING(READ_QC.out.reads)
 
     ORGANELLE_FILTERING.out.reports.view { sm, report_file ->
         "Organelle filter report: ${sm.id} | ${report_file}"
@@ -215,6 +172,11 @@ Accepted values are currently: local, accession.
 
     emit:
     samples             = ch_samples
+    materialized_reads       = MATERIALIZE_READS.out.reads
+    remote_provider_reports  = MATERIALIZE_READS.out.remote_provider_reports
+    remote_manifests         = MATERIALIZE_READS.out.remote_manifests
+    qc_reads                 = READ_QC.out.reads
+    fastq_integrity_reports  = READ_QC.out.integrity_report
     stats_seqkit             = READ_QC.out.stats_seqkit
     pair_audit               = READ_QC.out.pair_audit
     fastqc_html              = READ_QC.out.fastqc_html
