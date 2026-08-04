@@ -17,6 +17,6 @@ process VALIDATE_SAMPLESHEET {
     validate_samplesheet.py \
         --input ${samplesheet} \
         --output samplesheet.validated.csv \
-        --base-dir ${projectDir}
+        --base-dir "${launchDir}"
     """
 }

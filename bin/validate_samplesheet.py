@@ -21,6 +21,13 @@ REQUIRED_COLUMNS = [
     "organelle_fasta",
 ]
 
+OPTIONAL_COLUMNS = [
+    "target_read_length",
+    "sampling_seed",
+]
+
+OUTPUT_COLUMNS = REQUIRED_COLUMNS + OPTIONAL_COLUMNS
+
 ALLOWED_SOURCES = {"local", "accession"}
 ALLOWED_PROVIDERS = {"local", "auto", "ena", "ncbi_sra"}
 
@@ -91,6 +98,24 @@ def require_positive_integer(
 
     return str(number)
 
+def require_nonnegative_integer(
+    value: object, field: str, row_number: int
+) -> str:
+    """Validates and parses integer numbers greater than or equal to zero."""
+    text = str(value).strip() if value is not None else ""
+
+    try:
+        number = int(text)
+    except ValueError:
+        die(
+            f"Row {row_number}: '{field}' must be an integer; "
+            f"received '{text}'."
+        )
+
+    if number < 0:
+        die(f"Row {row_number}: '{field}' must be at least 0.")
+
+    return str(number)
 
 def require_positive_float(
     value: object, field: str, row_number: int
@@ -272,6 +297,24 @@ def main() -> None:
                 clean.get("target_coverage"), "target_coverage", row_number
             )
 
+            if is_blank(clean.get("target_read_length")):
+                clean["target_read_length"] = ""
+            else:
+                clean["target_read_length"] = require_positive_integer(
+                    clean.get("target_read_length"),
+                    "target_read_length",
+                    row_number,
+                )
+
+            if is_blank(clean.get("sampling_seed")):
+                clean["sampling_seed"] = ""
+            else:
+                clean["sampling_seed"] = require_nonnegative_integer(
+                    clean.get("sampling_seed"),
+                    "sampling_seed",
+                    row_number,
+                )
+
             organelle_fasta = clean.get("organelle_fasta", "")
             if not is_blank(organelle_fasta) and not args.skip_organelle_filter:
                 org_path = resolve_input_path(organelle_fasta, base_dir)
@@ -303,12 +346,12 @@ def main() -> None:
     with output_path.open(mode="w", newline="", encoding="utf-8") as out_handle:
         writer = csv.DictWriter(
             out_handle,
-            fieldnames=REQUIRED_COLUMNS,
+            fieldnames=OUTPUT_COLUMNS,
             extrasaction="ignore",
         )
         writer.writeheader()
         for row in rows:
-            writer.writerow({col: row.get(col, "") for col in REQUIRED_COLUMNS})
+            writer.writerow({col: row.get(col, "") for col in OUTPUT_COLUMNS})
 
     print(f"[validate_samplesheet] OK: {len(rows)} row(s) validated.")
     print(f"[validate_samplesheet] Output: {output_path}")

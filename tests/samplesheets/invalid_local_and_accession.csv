@@ -1,2 +1,2 @@
-sample,source,provider,fastq_1,fastq_2,accession,organism,genome_size_1C_bp,ploidy,target_coverage,organelle_fasta
-bad_sample,local,local,reads_R1.fastq.gz,reads_R2.fastq.gz,SRR38519255,Carex_test,1000000000,2,0.001,organelle.fasta
+sample,source,provider,fastq_1,fastq_2,accession,organism,genome_size_1C_bp,ploidy,target_coverage,organelle_fasta,target_read_length,sampling_seed
+bad_sample,local,local,reads_R1.fastq.gz,reads_R2.fastq.gz,SRR38519255,Carex_test,1000000000,2,0.001,organelle.fasta,,

@@ -35,6 +35,15 @@
       "title": "Sampling and filtering options",
       "type": "object",
       "properties": {
+        "genome_size_1C_bp": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "default": null,
+          "minimum": 1,
+          "description": "Optional global haploid 1C genome-size fallback in base pairs. Per-sample values may be supplied through the samplesheet."
+        },
         "genome_size_bp": {
           "type": [
             "integer",
@@ -42,7 +51,7 @@
           ],
           "default": null,
           "minimum": 1,
-          "description": "Optional global genome-size fallback in base pairs. Per-sample values may be supplied through the samplesheet."
+          "description": "Deprecated compatibility alias for genome_size_1C_bp."
         },
         "target_coverage": {
           "type": [
@@ -52,6 +61,14 @@
           "default": null,
           "exclusiveMinimum": 0,
           "description": "Optional global target-coverage fallback. Per-sample values may be supplied through the samplesheet."
+        },
+        "coverage_basis": {
+          "type": "string",
+          "default": "haploid_1C",
+          "enum": [
+            "haploid_1C"
+          ],
+          "description": "Coverage is calculated relative to the haploid 1C genome size."
         },
         "sampling_seed": {
           "type": "integer",

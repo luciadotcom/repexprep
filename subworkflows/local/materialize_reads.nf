@@ -47,7 +47,10 @@ def buildInputMeta(row) {
         target_read_length    : row.target_read_length
             ? row.target_read_length as Integer
             : null,
-
+        sampling_seed         : emptyToNull(row.sampling_seed) !=null
+            ? row.sampling_seed as Integer
+            : null,
+            
         organelle_fasta       : emptyToNull(row.organelle_fasta),
 
         original_fastq_1      : emptyToNull(row.fastq_1),

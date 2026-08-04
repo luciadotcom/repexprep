@@ -45,16 +45,3 @@ nextflow run . \
     -with-trace results/week2_monday_qc/pipeline_info/trace.txt \
     -with-timeline results/week2_monday_qc/pipeline_info/timeline.html
 
-# Week 2 Tuesday: Organelle filtering
-
-## Baseline audit
-- Reference checked: PASS
-- Reference checksum recorded: PASS
-- Container validated: PASS
-- Minimap2 version: 2.31-r1302
-- Samtools version: 1.24
-- Input/output files reviewed: PASS
-- R1/R2 counts equal: PASS
-- Pair identifiers synchronised: PASS
-- Baseline equivalence: PASS / PENDING / ACCEPTED DIFFERENCE
-- Index strategy: FASTA runtime indexing / prebuilt MMI
