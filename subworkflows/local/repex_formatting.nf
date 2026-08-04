@@ -13,7 +13,7 @@ workflow REPEX_FORMATTING {
     VALIDATE_REPEX_FASTA(RENAME_FASTQ_TO_FASTA.out.fasta)
 
     emit:
-    repex_fasta        = RENAME_FASTQ_TO_FASTA.out.fasta
+    repex_fasta        = VALIDATE_REPEX_FASTA.out.fasta
     formatting_reports = RENAME_FASTQ_TO_FASTA.out.report
     validation_reports = VALIDATE_REPEX_FASTA.out.report
 }
