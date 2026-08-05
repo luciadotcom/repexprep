@@ -6,14 +6,6 @@ process ORGANELLE_FILTER {
 
     container "${params.organelle_filter_container}"
 
-    publishDir "${params.outdir}/organelle_filter/fastq",
-        mode: 'copy',
-        pattern: "*.organelle_filtered.fastq.gz"
-
-    publishDir "${params.outdir}/organelle_filter/reports",
-        mode: 'copy',
-        pattern: "*.organelle_filter_report.tsv"
-
     input:
     tuple val(meta), path(reads)
 

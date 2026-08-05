@@ -4,8 +4,6 @@ process VALIDATE_SAMPLESHEET {
 
     label 'process_low'
 
-    publishDir "${params.outdir}/pipeline_info", mode: 'copy'
-
     input:
     path samplesheet
 

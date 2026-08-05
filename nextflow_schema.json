@@ -134,6 +134,18 @@
           "default": "VIRIDIPLANTAE3.0",
           "minLength": 1,
           "description": "RepeatExplorer taxonomic database or classification preset."
+        },
+        "publish_dir_mode": {
+          "type": "string",
+          "default": "copy",
+          "enum": [
+            "copy",
+            "copyNoFollow",
+            "link",
+            "rellink",
+            "symlink"
+          ],
+          "description": "Method used to publish pipeline outputs."
         }
       }
     }

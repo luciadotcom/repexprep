@@ -1,8 +1,8 @@
 process SEQKIT_STATS {
+    
     tag "${meta.id}"
     label 'process_low'
 
-    publishDir "${params.outdir}/raw_qc/seqkit_stats", mode: 'copy'
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container

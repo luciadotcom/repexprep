@@ -4,8 +4,6 @@ process CHOOSE_TARGET_LENGTH {
 
     label 'process_low'
 
-    publishDir "${params.outdir}/length_normalization/target_length", mode: 'copy'
-
     input:
     tuple val(sample_id), val(meta), path(reads)
 

@@ -4,8 +4,6 @@ process PAIR_AUDIT {
 
     label 'process_low'
 
-    publishDir "${params.outdir}/raw_qc/pair_audit", mode: 'copy'
-
     input:
     tuple val(meta), path(reads)
 
