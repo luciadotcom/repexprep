@@ -16,5 +16,7 @@ workflow RUN_REPEATEXPLORER {
 
     emit:
     repex_dir = REPEATEXPLORER.out.repex_dir // channel: [ val(meta), path(dir) ]
+    logs = REPEATEXPLORER.out.log
+    reports = REPEATEXPLORER.out.report
     versions  = ch_versions                  // channel: [ path(versions.yml) ]
 }
