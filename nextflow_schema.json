@@ -119,6 +119,23 @@
           "description": "Maximum acceptable target read length."
         }
       }
+    },
+    "repeatexplorer_options": {
+      "title": "RepeatExplorer options",
+      "type": "object",
+      "properties": {
+        "run_repeatexplorer": {
+          "type": "boolean",
+          "default": false,
+          "description": "Run RepeatExplorer independently for each validated sample FASTA."
+        },
+        "repeatexplorer_taxon": {
+          "type": "string",
+          "default": "VIRIDIPLANTAE3.0",
+          "minLength": 1,
+          "description": "RepeatExplorer taxonomic database or classification preset."
+        }
+      }
     }
   },
   "allOf": [
@@ -127,6 +144,9 @@
     },
     {
       "$ref": "#/definitions/sampling_and_filtering_options"
+    },
+    {
+      "$ref": "#/definitions/repeatexplorer_options"
     },
     {
       "if": {
