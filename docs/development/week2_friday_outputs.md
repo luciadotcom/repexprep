@@ -1,4 +1,4 @@
-# Week 2 Friday morning: output-publication contract
+# Week 2 Friday morning: output-publication contract and validation
 
 ## Objective
 
@@ -159,3 +159,58 @@ from the input source, commit and parameters.
 | No remote raw FASTQ duplication | PASS |
 | No normalized FASTQ duplication | PASS |
 | Resume preserves output layout | PASS |
+
+# Week 2 Friday afternoon: Container parity and dual smoke test 
+
+## Objective
+
+Build one preprocessing software environment in Docker and Singularity
+formats and validate the same workflow path locally and on MetaCentrum.
+
+RepeatExplorer remains outside the general preprocessing container and
+continues to use its dedicated MetaCentrum CVMFS image.
+
+## Container strategy
+
+The preprocessing environment is maintained in two execution formats
+derived from one Docker build:
+
+| Profile | Engine | Image |
+|---|---|---|
+| `local` | Docker | `repexprep-tools:1.0.0` |
+| `metacentrum` | Singularity | `repexprep-tools_1.0.0.sif` |
+| RepeatExplorer on MetaCentrum | Singularity | Dedicated CVMFS image |
+
+The SIF was generated from the exported Docker image, ensuring that the
+local and HPC preprocessing profiles use the same software environment.
+
+Large container binaries are not stored in Git. Git records the build
+recipe, package manifest, versions, checksums and reconstruction
+instructions.
+
+## Dual smoke-test results
+
+| Check | Local Docker | MetaCentrum SIF |
+|---|---:|---:|
+| Unified samplesheet validation | PASS | PASS |
+| Local FASTQ input | PASS | PASS |
+| Remote accession acquisition | PASS | PASS |
+| FASTQ integrity | PASS | PASS |
+| FastQC | PASS | PASS |
+| SeqKit stats | PASS | PASS |
+| Pair audit | PASS | PASS |
+| Organelle filtering | PASS | PASS |
+| 1C coverage calculation | PASS | PASS |
+| Reproducible sampling | PASS | PASS |
+| REPEX FASTA validation | PASS | PASS |
+| Output-layout checker | PASS | PASS |
+| Resume | PASS | PASS |
+
+## Equivalence
+
+- Coverage plans:
+- Sampled R1 logical checksum:
+- Sampled R2 logical checksum:
+- REPEX FASTA checksum:
+- Container versions:
+- Accepted differences:

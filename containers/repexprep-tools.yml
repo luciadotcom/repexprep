@@ -1,0 +1,28 @@
+name: base
+
+channels:
+  - conda-forge
+  - bioconda
+
+dependencies:
+  - python=3.12
+  - fastqc=0.12.1
+  - seqkit
+  - minimap2
+  - samtools
+  - sra-tools
+  - pigz
+  - gzip
+  - gawk
+  - coreutils
+  - procps-ng
+  - findutils
+  - grep
+  - sed
+  - curl
+  - wget
+  - jq
+  - bash
+  - zip
+  - unzip
+  - ca-certificates

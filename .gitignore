@@ -25,3 +25,10 @@ samplesheets/*.validated.csv
 work/
 .nextflow/
 .nextflow.log*
+
+# Locally built container artefacts
+containers/*.docker.tar
+containers/*.docker.tar.gz
+containers/*.sif
+containers/.singularity_cache/
+containers/.singularity_tmp/
