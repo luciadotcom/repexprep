@@ -42,7 +42,7 @@
           ],
           "default": null,
           "minimum": 1,
-          "description": "Optional global genome-size fallback in base pairs. Per-sample values may be supplied through the samplesheet."
+          "description": "Deprecated compatibility alias for genome_size_1C_bp."
         },
         "target_coverage": {
           "type": [
@@ -100,6 +100,23 @@
           "default": 200,
           "minimum": 1,
           "description": "Maximum acceptable target read length."
+        },
+        "genome_size_1C_bp": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "default": null,
+          "minimum": 1,
+          "description": "Optional global haploid 1C genome-size fallback in base pairs. Per-sample values may be supplied through the samplesheet."
+        },
+        "coverage_basis": {
+          "type": "string",
+          "default": "haploid_1C",
+          "enum": [
+            "haploid_1C"
+          ],
+          "description": "Coverage is calculated relative to the haploid 1C genome size."
         }
       }
     }

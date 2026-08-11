@@ -15,11 +15,13 @@ REQUIRED_COLUMNS = [
 
 OPTIONAL_COLUMNS = [
     "organism",
+    "genome_size_1C_bp",
     "genome_size_bp",
     "ploidy",
     "organelle_fasta",
     "target_coverage",
     "target_read_length",
+    "sampling_seed",
 ]
 
 SAMPLE_RE = re.compile(r"^[A-Za-z0-9_.-]+$")
@@ -177,22 +179,61 @@ def main() -> None:
 
                 clean[column] = str(resolved_path)
 
-            genome_size = clean.get("genome_size_bp", "")
+            genome_size_1c = clean.get("genome_size_1C_bp", "")
+            genome_size_legacy = clean.get("genome_size_bp", "")
 
-            if genome_size:
+            genome_size_1c_value = None
+            genome_size_legacy_value = None
+
+            if genome_size_1c:
                 try:
-                    genome_size_value = int(genome_size)
+                    genome_size_1c_value = int(genome_size_1c)
+                except ValueError:
+                    die(
+                        f"Row {row_number}: genome_size_1C_bp "
+                        "must be a positive integer."
+                    )
+
+                if genome_size_1c_value <= 0:
+                    die(
+                        f"Row {row_number}: genome_size_1C_bp "
+                        "must be a positive integer."
+                    )
+
+            if genome_size_legacy:
+                try:
+                    genome_size_legacy_value = int(
+                        genome_size_legacy
+                    )
                 except ValueError:
                     die(
                         f"Row {row_number}: genome_size_bp "
                         "must be a positive integer."
                     )
 
-                if genome_size_value <= 0:
+                if genome_size_legacy_value <= 0:
                     die(
                         f"Row {row_number}: genome_size_bp "
                         "must be a positive integer."
                     )
+
+            if (
+                genome_size_1c_value is not None
+                and genome_size_legacy_value is not None
+                and genome_size_1c_value != genome_size_legacy_value
+            ):
+                die(
+                    f"Row {row_number}: genome_size_1C_bp and "
+                    "legacy genome_size_bp specify different values."
+                )
+
+            if (
+                genome_size_1c_value is None
+                and genome_size_legacy_value is not None
+            ):
+                clean["genome_size_1C_bp"] = str(
+                    genome_size_legacy_value
+                )
 
             ploidy = clean.get("ploidy", "")
 
@@ -248,6 +289,23 @@ def main() -> None:
                     die(
                         f"Row {row_number}: target_read_length "
                         "must be a positive integer."
+                    )
+
+            sampling_seed = clean.get("sampling_seed", "")
+
+            if sampling_seed:
+                try:
+                    sampling_seed_value = int(sampling_seed)
+                except ValueError:
+                    die(
+                        f"Row {row_number}: sampling_seed "
+                        "must be a non-negative integer."
+                    )
+
+                if sampling_seed_value < 0:
+                    die(
+                        f"Row {row_number}: sampling_seed "
+                        "must be a non-negative integer."
                     )
 
             rows.append(clean)
