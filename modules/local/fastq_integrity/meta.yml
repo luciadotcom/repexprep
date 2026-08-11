@@ -1,0 +1,27 @@
+name: fastq_integrity
+description: Validate paired FASTQ file presence and gzip integrity
+keywords:
+  - fastq
+  - paired-end
+  - integrity
+tools:
+  - gzip:
+      description: GNU gzip compression utility
+input:
+  - tuple:
+      - meta:
+          type: map
+          description: Sample metadata
+      - reads:
+          type: file
+          description: Paired-end FASTQ files
+output:
+  - reads:
+      type: file
+      description: Unmodified paired-end FASTQ files
+  - report:
+      type: file
+      description: FASTQ integrity report
+  - versions:
+      type: file
+      description: Software versions

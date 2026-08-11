@@ -1,6 +1,7 @@
 include { PAIR_AUDIT } from '../../modules/local/pair_audit/main'
 include { FASTQC } from '../../modules/nf-core/fastqc/main'
 include { SEQKIT_STATS } from '../../modules/nf-core/seqkit/stats/main'
+include { FASTQ_INTEGRITY } from '../../modules/local/fastq_integrity/main'
 
 workflow READ_QC {
 
@@ -8,22 +9,27 @@ workflow READ_QC {
     ch_reads
 
     main:
-    ch_versions= Channel.empty()
 
-    FASTQC (ch_reads)
-    ch_versions = ch_versions.mix(FASTQC.out.versions)
+    FASTQ_INTEGRITY (ch_reads)
 
-    SEQKIT_STATS(ch_reads)
+    checked_reads_ch = FASTQ_INTEGRITY.out.reads
 
+    FASTQC (checked_reads_ch)
+    SEQKIT_STATS(checked_reads_ch)
+    PAIR_AUDIT(checked_reads_ch)
 
-    PAIR_AUDIT(ch_reads)
-
+    ch_versions = FASTQ_INTEGRITY.out.versions.mix(
+        FASTQC.out.versions,
+        SEQKIT_STATS.out.versions_seqkit
+        )
 
     emit:
-    fastqc_html = FASTQC.out.html
-    fastqc_zip  = FASTQC.out.zip
-    pair_audit  = PAIR_AUDIT.out.audit
-    stats_seqkit = SEQKIT_STATS.out.stats
-    versions    = ch_versions
+    reads            = checked_reads_ch
+    integrity_report = FASTQ_INTEGRITY.out.report
+    fastqc_html      = FASTQC.out.html
+    fastqc_zip       = FASTQC.out.zip
+    pair_audit       = PAIR_AUDIT.out.audit
+    stats_seqkit     = SEQKIT_STATS.out.stats
+    versions         = ch_versions
 
 }
