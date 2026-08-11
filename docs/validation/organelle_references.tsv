@@ -1,0 +1,2 @@
+sample	organism	reference	absolute_path	exists	sequences	total_bases	sha256
+SRR38519255_Carex_boryana	Carex_boryana	org_reference/combined/carex_combined_orgs.fasta	/home/_lucia_/work/repex-pipeline/preproc/org_reference/combined/carex_combined_orgs.fasta	True	2	1598952	7e0fa5aecdd2b36dfab8529e36dc6aa9b9202eac1c91d00d5f25dda2918936de

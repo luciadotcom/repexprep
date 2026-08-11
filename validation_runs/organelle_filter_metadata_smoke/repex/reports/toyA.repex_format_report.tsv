@@ -1,0 +1,2 @@
+sample	r1_file	r2_file	output_fasta	total_pairs	written_pairs	written_sequences	total_bases	min_length	max_length	mean_length	id_mismatches	status
+toyA	toyA_R1.sampled.fastq.gz	toyA_R2.sampled.fastq.gz	toyA.repex.fasta	1000	1000	2000	300000	150	150	150.00	0	PASS

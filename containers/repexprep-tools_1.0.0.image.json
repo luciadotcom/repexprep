@@ -1,0 +1,89 @@
+[
+    {
+        "Id": "sha256:8d8de273d8200fa994cae1450cebb0de64ba71489ebd79b8f576e6417dda2721",
+        "RepoTags": [
+            "repexprep-tools:1.0.0"
+        ],
+        "RepoDigests": [
+            "repexprep-tools@sha256:8d8de273d8200fa994cae1450cebb0de64ba71489ebd79b8f576e6417dda2721"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-06T10:15:35.861336865+02:00",
+        "Config": {
+            "User": "mambauser",
+            "Env": [
+                "PATH=/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "MAMBA_USER=mambauser",
+                "MAMBA_USER_ID=57439",
+                "MAMBA_USER_GID=57439",
+                "LANG=C.UTF-8",
+                "LC_ALL=C.UTF-8",
+                "ENV_NAME=base",
+                "MAMBA_ROOT_PREFIX=/opt/conda",
+                "MAMBA_EXE=/bin/micromamba",
+                "CONDA_OVERRIDE_CUDA=",
+                "HOME=/tmp"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/_entrypoint.sh"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "WorkingDir": "/work",
+            "Labels": {
+                "distro_id": "debian",
+                "org.opencontainers.image.created": "2026-06-10T15:31:14.529Z",
+                "org.opencontainers.image.description": "Software environment for REPEXPREP preprocessing",
+                "org.opencontainers.image.licenses": "Apache-2.0",
+                "org.opencontainers.image.revision": "d12544cb2979d3be2bfa917168e93b4d49fb6d96",
+                "org.opencontainers.image.source": "https://github.com/mamba-org/micromamba-docker",
+                "org.opencontainers.image.title": "REPEXPREP preprocessing tools",
+                "org.opencontainers.image.url": "https://github.com/mamba-org/micromamba-docker",
+                "org.opencontainers.image.version": "1.0.0"
+            },
+            "ArgsEscaped": true,
+            "Shell": [
+                "/usr/local/bin/_dockerfile_shell.sh"
+            ]
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 738585309,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:219a998c60509502b47b97f1158067d5dd62640d2d689560d32cfd5594f6bc40",
+                "sha256:9411ad17857fcbb0128b07fd26a618330891dfebea88f40e2ecaedfda431dd62",
+                "sha256:f28f442e18ef1574f4d1ffeca18f558d574bbb16468732d96349a2a9eb3c6186",
+                "sha256:0b782aa5dc8eb1aa8700eb37d9e89eee179b15e9ab9e7fbd490de8cbc44092e6",
+                "sha256:1e19caeba3c2da9f00917e8e1c3cde7ecd3b50ad8a85d1c9457201b646edb0e6",
+                "sha256:025cd5af6a9c0438d0efb0e0de1cc353ac6fe038714dd726c4cfeecebfabde7a",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:d983f743efb51ac6e0c5a2aa077af881dfb66aced4cf7fbb953b2631f8fa9080",
+                "sha256:7991b453b171399b85f296ce8b3242223837a3f590c5ee413ebcfc7b19f41dc6",
+                "sha256:c7ef73ddb26dc835d003dd447d5e206cf220304597fa9918969e12e02b5ef949",
+                "sha256:619a6966fbdec5bdb2592ff93204d6d30e5ac7b3f6a01a6781d248175b4cf183",
+                "sha256:b140571bccb4838e4bc7de64c07eaa182109f69f54dd0cec751ed9dc03bf5038",
+                "sha256:8c1defffe543911d727322ce75703069244fb390c233995a0b42c0d66e291e8a",
+                "sha256:c98379fa4b78cf419ce85ad8b8a315353624482d9041ef3f1c7663967444a580"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-06T08:17:34.05552305Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:8d8de273d8200fa994cae1450cebb0de64ba71489ebd79b8f576e6417dda2721",
+            "size": 856
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "i0vlowpqimf9bc0buliex6msw",
+                    "CreatedAt": "2026-08-06T10:18:40.583954886+02:00"
+                }
+            ]
+        }
+    }
+]

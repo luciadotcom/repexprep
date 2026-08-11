@@ -1,0 +1,2 @@
+sample	r1_file	r2_file	r1_reads	r2_reads	compared_pairs	id_mismatches	status
+SRR38519255_Carex_boryana	SRR38519255_Carex_boryana_R1.fastq.gz	SRR38519255_Carex_boryana_R2.fastq.gz	10000	10000	10000	0	PASS

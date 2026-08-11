@@ -1,0 +1,2 @@
+sample	total_pairs	requested_pairs	selected_indices	written_pairs	id_mismatches	sampling_mode	seed	status
+toyA	1000	1000	1000	1000	0	keep_all	42	PASS

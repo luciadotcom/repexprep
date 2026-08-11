@@ -1,0 +1,2 @@
+sample	genome_size_bp	target_coverage	target_length	bases_per_pair	available_pairs	requested_pairs	sampled_pairs	planned_bases	achieved_coverage	status
+toyA	135000000	0.1	150	300	1000	45000	1000	300000	0.00222222	WARN_INSUFFICIENT_READS_KEEP_ALL

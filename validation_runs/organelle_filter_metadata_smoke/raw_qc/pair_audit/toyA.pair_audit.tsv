@@ -1,0 +1,2 @@
+sample	r1_file	r2_file	r1_reads	r2_reads	compared_pairs	id_mismatches	status
+toyA	toyA_R1.fastq.gz	toyA_R2.fastq.gz	1000	1000	1000	0	PASS

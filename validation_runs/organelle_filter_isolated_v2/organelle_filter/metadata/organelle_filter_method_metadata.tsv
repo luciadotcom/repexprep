@@ -1,0 +1,2 @@
+filtering_method	pair_removal_rule	minimap2_parameters	samtools_required_flags	samtools_excluded_flags	minimap2_version	samtools_version
+minimap2_samtools_fastq	remove_pair_if_either_mate_maps	-ax sr	12	2304	2.26-r1175	1.19.2

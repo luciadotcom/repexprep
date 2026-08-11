@@ -1,0 +1,235 @@
+Jul-31 15:15:12.898 [main] DEBUG nextflow.cli.Launcher - $> nextflow -log /home/_lucia_/work/repex-pipeline/preproc/validation_runs/organelle_filter_metadata_smoke.nextflow.log -c /tmp/repex_local_docker.config run . -profile local --input /home/_lucia_/work/repex-pipeline/preproc/assets/samplesheet.validated.test.csv --outdir /home/_lucia_/work/repex-pipeline/preproc/validation_runs/organelle_filter_metadata_smoke -work-dir /home/_lucia_/work/repex-pipeline/preproc/work_organelle_filter_metadata_smoke -with-trace /home/_lucia_/work/repex-pipeline/preproc/validation_runs/organelle_filter_metadata_smoke/trace.tsv -with-report /home/_lucia_/work/repex-pipeline/preproc/validation_runs/organelle_filter_metadata_smoke/report.html -with-timeline /home/_lucia_/work/repex-pipeline/preproc/validation_runs/organelle_filter_metadata_smoke/timeline.html -resume
+Jul-31 15:15:13.131 [main] DEBUG nextflow.cli.CmdRun - N E X T F L O W  ~  version 26.04.4
+Jul-31 15:15:13.169 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/_lucia_/.nextflow/plugins; core-plugins: nf-amazon@3.9.2,nf-azure@1.22.6,nf-cloudcache@0.6.0,nf-codecommit@0.5.3,nf-console@1.3.0,nf-google@1.27.3,nf-k8s@1.5.4,nf-seqera@0.21.0,nf-tower@1.28.1,nf-wave@1.21.0
+Jul-31 15:15:13.203 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Jul-31 15:15:13.205 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Jul-31 15:15:13.209 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.14.1 in 'deployment' mode
+Jul-31 15:15:13.235 [main] DEBUG nextflow.util.RetryConfig - Missing nextflow session - using default retry config
+Jul-31 15:15:13.433 [main] DEBUG nextflow.plugin.PluginUpdater - Using plugin repository: HttpPluginRepository [registry]; url=https://registry.nextflow.io/api
+Jul-31 15:15:13.444 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Jul-31 15:15:13.485 [main] DEBUG nextflow.scm.AssetManager - Selecting multi-revision strategy
+Jul-31 15:15:13.500 [main] DEBUG nextflow.config.ConfigParserFactory - Using config parser v2
+Jul-31 15:15:14.285 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /home/_lucia_/work/repex-pipeline/preproc/nextflow.config
+Jul-31 15:15:14.292 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /tmp/repex_local_docker.config
+Jul-31 15:15:14.295 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/_lucia_/work/repex-pipeline/preproc/nextflow.config
+Jul-31 15:15:14.296 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /tmp/repex_local_docker.config
+Jul-31 15:15:14.303 [main] DEBUG nextflow.config.ConfigParserFactory - Using config parser v2
+Jul-31 15:15:14.332 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `local`
+Jul-31 15:15:14.421 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `local`
+Jul-31 15:15:14.453 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [local, test, metacentrum, docker]
+Jul-31 15:15:14.551 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Jul-31 15:15:14.553 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[]
+Jul-31 15:15:14.615 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /home/_lucia_/.nextflow/secrets/store.json
+Jul-31 15:15:14.623 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@35a60674] - activable => nextflow.secret.LocalSecretsProvider@35a60674
+Jul-31 15:15:14.650 [main] DEBUG nextflow.cli.CmdRun - Launching `./main.nf` [loquacious_coulomb] - revision: d8e808d8ea
+Jul-31 15:15:14.806 [main] DEBUG nextflow.Session - Session UUID: bf87251c-2f3c-4358-bc80-c0c8acc5f33e
+Jul-31 15:15:14.807 [main] DEBUG nextflow.Session - Run name: loquacious_coulomb
+Jul-31 15:15:14.809 [main] DEBUG nextflow.Session - Executor pool size: 8
+Jul-31 15:15:14.821 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
+Jul-31 15:15:14.833 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=24; workQueue=LinkedBlockingQueue[-1]; allowCoreThreadTimeout=false
+Jul-31 15:15:14.866 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 26.04.4 build 12445
+  Created: 17-06-2026 16:30 UTC (18:30 CEST)
+  System: Linux 6.6.119-09283-g9c138e0af8c3
+  Runtime: Groovy 4.0.31 on OpenJDK 64-Bit Server VM 25.0.2-internal-adhoc.conda.src
+  Encoding: UTF-8 (UTF-8)
+  Process: 14288@penguin [127.0.1.1]
+  CPUs: 8 - Mem: 6.4 GB (130.2 MB) - Swap: 0 (0)
+Jul-31 15:15:14.937 [main] DEBUG nextflow.Session - Work-dir: /home/_lucia_/work/repex-pipeline/preproc/work_organelle_filter_metadata_smoke [btrfs]
+Jul-31 15:15:15.015 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Jul-31 15:15:15.031 [main] DEBUG nextflow.Session - Observer factory (v2): LinObserverFactory
+Jul-31 15:15:15.035 [main] DEBUG nextflow.Session - Observer factory (v2): DefaultObserverFactory
+Jul-31 15:15:15.092 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Jul-31 15:15:15.106 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 9; maxThreads: 1000
+Jul-31 15:15:15.247 [main] DEBUG nextflow.Session - Session start
+Jul-31 15:15:15.267 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow started -- trace file: /home/_lucia_/work/repex-pipeline/preproc/validation_runs/organelle_filter_metadata_smoke/trace.tsv
+Jul-31 15:15:15.275 [main] DEBUG nextflow.script.ScriptLoaderFactory - Using script parser v2
+Jul-31 15:15:17.984 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Jul-31 15:15:18.514 [main] INFO  nextflow.Nextflow - 
+Jul-31 15:15:18.515 [main] INFO  nextflow.Nextflow - ==============================================
+Jul-31 15:15:18.516 [main] INFO  nextflow.Nextflow -  laynez-21-repexprep
+Jul-31 15:15:18.518 [main] INFO  nextflow.Nextflow -  WGS preprocessing for RepeatExplorer2
+Jul-31 15:15:18.519 [main] INFO  nextflow.Nextflow - ==============================================
+Jul-31 15:15:18.522 [main] INFO  nextflow.Nextflow - Input samplesheet : /home/_lucia_/work/repex-pipeline/preproc/assets/samplesheet.validated.test.csv
+Jul-31 15:15:18.524 [main] INFO  nextflow.Nextflow - Output directory  : /home/_lucia_/work/repex-pipeline/preproc/validation_runs/organelle_filter_metadata_smoke
+Jul-31 15:15:18.525 [main] INFO  nextflow.Nextflow - Test mode         : false
+Jul-31 15:15:18.529 [main] INFO  nextflow.Nextflow - 
+Jul-31 15:15:18.584 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-31 15:15:18.585 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-31 15:15:18.605 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Jul-31 15:15:18.622 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=8; memory=6.4 GB; capacity=8; pollInterval=100ms; dumpInterval=5m
+Jul-31 15:15:18.628 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Jul-31 15:15:18.701 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'REPEXPREP:INPUT_CHECK:VALIDATE_SAMPLESHEET': maxForks=0; fair=false; array=0
+Jul-31 15:15:18.879 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:FASTQC` matches process REPEXPREP:READ_QC:FASTQC
+Jul-31 15:15:18.882 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-31 15:15:18.882 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-31 15:15:18.884 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'REPEXPREP:READ_QC:FASTQC': maxForks=0; fair=false; array=0
+Jul-31 15:15:18.925 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-31 15:15:18.926 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-31 15:15:18.929 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'REPEXPREP:READ_QC:SEQKIT_STATS': maxForks=0; fair=false; array=0
+Jul-31 15:15:18.938 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-31 15:15:18.938 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-31 15:15:18.942 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'REPEXPREP:READ_QC:PAIR_AUDIT': maxForks=0; fair=false; array=0
+Jul-31 15:15:19.043 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-31 15:15:19.043 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-31 15:15:19.045 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'REPEXPREP:ORGANELLE_FILTERING:ORGANELLE_FILTER': maxForks=0; fair=false; array=0
+Jul-31 15:15:19.157 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-31 15:15:19.158 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-31 15:15:19.160 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'REPEXPREP:LENGTH_NORMALIZATION:PROFILE_READ_LENGTH': maxForks=0; fair=false; array=0
+Jul-31 15:15:19.185 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-31 15:15:19.185 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-31 15:15:19.186 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'REPEXPREP:LENGTH_NORMALIZATION:SELECT_GLOBAL_TARGET_LENGTH': maxForks=0; fair=false; array=0
+Jul-31 15:15:19.210 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-31 15:15:19.210 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-31 15:15:19.211 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'REPEXPREP:LENGTH_NORMALIZATION:CROP_FIXED_LENGTH': maxForks=0; fair=false; array=0
+Jul-31 15:15:19.251 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-31 15:15:19.251 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-31 15:15:19.253 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'REPEXPREP:COVERAGE_SAMPLING:PLAN_COVERAGE': maxForks=0; fair=false; array=0
+Jul-31 15:15:19.280 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-31 15:15:19.280 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-31 15:15:19.281 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'REPEXPREP:COVERAGE_SAMPLING:SAMPLE_PAIRS': maxForks=0; fair=false; array=0
+Jul-31 15:15:19.300 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-31 15:15:19.300 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-31 15:15:19.301 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'REPEXPREP:REPEX_FORMATTING:RENAME_FASTQ_TO_FASTA': maxForks=0; fair=false; array=0
+Jul-31 15:15:19.308 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-31 15:15:19.309 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-31 15:15:19.310 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'REPEXPREP:REPEX_FORMATTING:VALIDATE_REPEX_FASTA': maxForks=0; fair=false; array=0
+Jul-31 15:15:19.346 [main] DEBUG nextflow.Session - Process names: FASTQC, PROFILE_READ_LENGTH, REPEXPREP:COVERAGE_SAMPLING:SAMPLE_PAIRS, REPEXPREP:INPUT_CHECK:VALIDATE_SAMPLESHEET, SELECT_GLOBAL_TARGET_LENGTH, SAMPLE_PAIRS, PLAN_COVERAGE, SEQKIT_STATS, VALIDATE_SAMPLESHEET, REPEATEXPLORER, ORGANELLE_FILTER, RENAME_FASTQ_TO_FASTA, REPEXPREP:READ_QC:PAIR_AUDIT, REPEXPREP:COVERAGE_SAMPLING:PLAN_COVERAGE, VALIDATE_REPEX_FASTA, REPEXPREP:READ_QC:FASTQC, REPEXPREP:READ_QC:SEQKIT_STATS, REPEXPREP:REPEX_FORMATTING:RENAME_FASTQ_TO_FASTA, REPEXPREP:LENGTH_NORMALIZATION:CROP_FIXED_LENGTH, REPEXPREP:REPEX_FORMATTING:VALIDATE_REPEX_FASTA, REPEXPREP:LENGTH_NORMALIZATION:SELECT_GLOBAL_TARGET_LENGTH, CROP_FIXED_LENGTH, REPEXPREP:LENGTH_NORMALIZATION:PROFILE_READ_LENGTH, PAIR_AUDIT, REPEXANALYSIS:RUN_REPEATEXPLORER:REPEATEXPLORER, REPEXPREP:ORGANELLE_FILTERING:ORGANELLE_FILTER
+Jul-31 15:15:19.358 [main] DEBUG nextflow.Session - Igniting dataflow network (15)
+Jul-31 15:15:19.360 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > REPEXPREP:INPUT_CHECK:VALIDATE_SAMPLESHEET
+Jul-31 15:15:19.361 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > REPEXPREP:READ_QC:FASTQC
+Jul-31 15:15:19.361 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > REPEXPREP:READ_QC:SEQKIT_STATS
+Jul-31 15:15:19.362 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > REPEXPREP:READ_QC:PAIR_AUDIT
+Jul-31 15:15:19.362 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > REPEXPREP:ORGANELLE_FILTERING:ORGANELLE_FILTER
+Jul-31 15:15:19.362 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > REPEXPREP:LENGTH_NORMALIZATION:PROFILE_READ_LENGTH
+Jul-31 15:15:19.363 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > REPEXPREP:LENGTH_NORMALIZATION:SELECT_GLOBAL_TARGET_LENGTH
+Jul-31 15:15:19.363 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > REPEXPREP:LENGTH_NORMALIZATION:CROP_FIXED_LENGTH
+Jul-31 15:15:19.364 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > REPEXPREP:COVERAGE_SAMPLING:PLAN_COVERAGE
+Jul-31 15:15:19.364 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > REPEXPREP:COVERAGE_SAMPLING:SAMPLE_PAIRS
+Jul-31 15:15:19.365 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > REPEXPREP:REPEX_FORMATTING:RENAME_FASTQ_TO_FASTA
+Jul-31 15:15:19.366 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > REPEXPREP:REPEX_FORMATTING:VALIDATE_REPEX_FASTA
+Jul-31 15:15:19.368 [main] DEBUG nextflow.script.ScriptRunner - Parsed script files:
+  _nf_script_1e5268771a503db9: /home/_lucia_/work/repex-pipeline/preproc/modules/local/validate_repex_fasta/main.nf
+  _nf_script_1e60bc8747c7d0ff: /home/_lucia_/work/repex-pipeline/preproc/modules/nf-core/fastqc/main.nf
+  _nf_script_d13420fe6f70edfa: /home/_lucia_/work/repex-pipeline/preproc/subworkflows/local/organelle_filter.nf
+  _nf_script_af14158ed4f69a7c: /home/_lucia_/work/repex-pipeline/preproc/workflows/repexanalysis.nf
+  _nf_script_7facb4700c01c302: /home/_lucia_/work/repex-pipeline/preproc/subworkflows/local/repex_formatting.nf
+  _nf_script_f524481ae59607e5: /home/_lucia_/work/repex-pipeline/preproc/subworkflows/local/run_repeatexplorer.nf
+  _nf_script_4a5a6b5ba1257cec: /home/_lucia_/work/repex-pipeline/preproc/modules/local/rename_convert_fasta/main.nf
+  _nf_script_9ef8ebb00e19492d: /home/_lucia_/work/repex-pipeline/preproc/modules/local/validate_samplesheet/main.nf
+  _nf_script_239329fc768126ce: /home/_lucia_/work/repex-pipeline/preproc/subworkflows/local/input_check.nf
+  _nf_script_80d3949da652d58e: /home/_lucia_/work/repex-pipeline/preproc/modules/local/repeatexplorer/main.nf
+  _nf_script_4bf6896bd528f80a: /home/_lucia_/work/repex-pipeline/preproc/modules/nf-core/seqkit/stats/main.nf
+  _nf_script_73f217795abd98ea: /home/_lucia_/work/repex-pipeline/preproc/modules/local/profile_read_length/main.nf
+  _nf_script_9254f3cd2d9ab3f1: /home/_lucia_/work/repex-pipeline/preproc/workflows/repexprep.nf
+  _nf_script_bae0f887ce05121a: /home/_lucia_/work/repex-pipeline/preproc/modules/local/select_global_target_length/main.nf
+  _nf_script_a2e0f819f00528ef: /home/_lucia_/work/repex-pipeline/preproc/modules/local/sample_pairs/main.nf
+  _nf_script_4a0bc380b001856b: /home/_lucia_/work/repex-pipeline/preproc/modules/local/pair_audit/main.nf
+  _nf_script_6e06100d8314a32e: /home/_lucia_/work/repex-pipeline/preproc/subworkflows/local/length_normalization.nf
+  _nf_script_7e739b12b2971187: /home/_lucia_/work/repex-pipeline/preproc/subworkflows/local/read_qc.nf
+  Main: /home/_lucia_/work/repex-pipeline/preproc/main.nf
+  _nf_script_0c1a1f20fce295c5: /home/_lucia_/work/repex-pipeline/preproc/modules/local/plan_coverage/main.nf
+  _nf_script_0288c4eff1d4ffd2: /home/_lucia_/work/repex-pipeline/preproc/modules/local/crop_fixed_length/main.nf
+  _nf_script_710340c82c61c1e5: /home/_lucia_/work/repex-pipeline/preproc/modules/local/organelle_filter/main.nf
+  _nf_script_ce11422138a63665: /home/_lucia_/work/repex-pipeline/preproc/subworkflows/local/coverage_sampling.nf
+Jul-31 15:15:19.368 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Jul-31 15:15:19.368 [main] DEBUG nextflow.Session - Session await
+Jul-31 15:15:19.691 [Actor Thread 3] INFO  nextflow.processor.TaskProcessor - [29/098bb8] Cached process > REPEXPREP:INPUT_CHECK:VALIDATE_SAMPLESHEET (samplesheet)
+Jul-31 15:15:19.768 [Actor Thread 3] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'PublishDir' minSize=10; maxSize=24; workQueue=LinkedBlockingQueue[-1]; allowCoreThreadTimeout=false
+Jul-31 15:15:19.800 [Actor Thread 12] INFO  nextflow.processor.TaskProcessor - [d7/c64d5f] Cached process > REPEXPREP:READ_QC:PAIR_AUDIT (toyA)
+Jul-31 15:15:19.909 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jul-31 15:15:19.912 [Task submitter] INFO  nextflow.Session - [dc/05e204] Submitted process > REPEXPREP:READ_QC:FASTQC (toyA)
+Jul-31 15:15:20.025 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jul-31 15:15:20.036 [Task submitter] INFO  nextflow.Session - [69/076cff] Submitted process > REPEXPREP:READ_QC:SEQKIT_STATS (toyA)
+Jul-31 15:15:20.212 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jul-31 15:15:20.213 [Task submitter] INFO  nextflow.Session - [cc/57b564] Submitted process > REPEXPREP:ORGANELLE_FILTERING:ORGANELLE_FILTER (toyA)
+Jul-31 15:15:21.706 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 3; name: REPEXPREP:READ_QC:SEQKIT_STATS (toyA); status: COMPLETED; exit: 0; error: -; workDir: /home/_lucia_/work/repex-pipeline/preproc/work_organelle_filter_metadata_smoke/69/076cff7371d3c37926a0d62071faf7]
+Jul-31 15:15:21.708 [Task monitor] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'TaskFinalizer' minSize=10; maxSize=24; workQueue=LinkedBlockingQueue[-1]; allowCoreThreadTimeout=false
+Jul-31 15:15:21.719 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 5; name: REPEXPREP:ORGANELLE_FILTERING:ORGANELLE_FILTER (toyA); status: COMPLETED; exit: 0; error: -; workDir: /home/_lucia_/work/repex-pipeline/preproc/work_organelle_filter_metadata_smoke/cc/57b5649a6556c6e6e8a6fba0166677]
+Jul-31 15:15:21.913 [TaskFinalizer-2] DEBUG nextflow.processor.TaskProcessor - Process REPEXPREP:ORGANELLE_FILTERING:ORGANELLE_FILTER > Skipping output binding because one or more optional files are missing: fileoutparam<3:1>
+Jul-31 15:15:21.935 [Actor Thread 9] DEBUG nextflow.file.SortFileCollector - FileCollector temp dir not removed: null
+Jul-31 15:15:22.015 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jul-31 15:15:22.016 [Task submitter] INFO  nextflow.Session - [bc/27a7c6] Submitted process > REPEXPREP:LENGTH_NORMALIZATION:PROFILE_READ_LENGTH (toyA)
+Jul-31 15:15:22.027 [Actor Thread 13] DEBUG nextflow.sort.BigSort - Sort completed -- entries: 1; slices: 1; internal sort time: 0.002 s; external sort time: 0.009 s; total time: 0.011 s
+Jul-31 15:15:22.029 [Actor Thread 13] DEBUG nextflow.file.FileCollector - >> temp file exists? false
+Jul-31 15:15:22.030 [Actor Thread 13] DEBUG nextflow.file.FileCollector - Missed collect-file cache -- cause: java.nio.file.NoSuchFileException: /home/_lucia_/work/repex-pipeline/preproc/work_organelle_filter_metadata_smoke/collect-file/54ca6b6fd22f411938831d8658bd30ac
+Jul-31 15:15:22.046 [Actor Thread 13] DEBUG nextflow.file.FileCollector - Saved collect-files list to: /home/_lucia_/work/repex-pipeline/preproc/work_organelle_filter_metadata_smoke/collect-file/54ca6b6fd22f411938831d8658bd30ac
+Jul-31 15:15:22.066 [Actor Thread 13] DEBUG nextflow.file.FileCollector - Deleting file collector temp dir: /tmp/nxf-4934692384105976191
+Jul-31 15:15:22.252 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 6; name: REPEXPREP:LENGTH_NORMALIZATION:PROFILE_READ_LENGTH (toyA); status: COMPLETED; exit: 0; error: -; workDir: /home/_lucia_/work/repex-pipeline/preproc/work_organelle_filter_metadata_smoke/bc/27a7c63ee0d1103583411679c18217]
+Jul-31 15:15:22.312 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jul-31 15:15:22.313 [Task submitter] INFO  nextflow.Session - [06/08c1ea] Submitted process > REPEXPREP:LENGTH_NORMALIZATION:SELECT_GLOBAL_TARGET_LENGTH (global)
+Jul-31 15:15:22.447 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 7; name: REPEXPREP:LENGTH_NORMALIZATION:SELECT_GLOBAL_TARGET_LENGTH (global); status: COMPLETED; exit: 0; error: -; workDir: /home/_lucia_/work/repex-pipeline/preproc/work_organelle_filter_metadata_smoke/06/08c1eadcbc6dba409b600508a4057a]
+Jul-31 15:15:22.494 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jul-31 15:15:22.495 [Task submitter] INFO  nextflow.Session - [4c/5e3784] Submitted process > REPEXPREP:LENGTH_NORMALIZATION:CROP_FIXED_LENGTH (toyA)
+Jul-31 15:15:22.762 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 8; name: REPEXPREP:LENGTH_NORMALIZATION:CROP_FIXED_LENGTH (toyA); status: COMPLETED; exit: 0; error: -; workDir: /home/_lucia_/work/repex-pipeline/preproc/work_organelle_filter_metadata_smoke/4c/5e3784c2b7d00545e431433e0ecaac]
+Jul-31 15:15:22.797 [Actor Thread 9] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
+  task: name=REPEXPREP:COVERAGE_SAMPLING:PLAN_COVERAGE (1); work-dir=null
+  error [nextflow.exception.WorkflowScriptErrorException]: ERROR [plan_coverage]: Missing target coverage for sample 'toyA'. Specify 'target_coverage' in the samplesheet or pass '--target_coverage'.
+Jul-31 15:15:22.821 [Actor Thread 9] ERROR nextflow.processor.TaskProcessor - Error executing process > 'REPEXPREP:COVERAGE_SAMPLING:PLAN_COVERAGE (1)'
+
+Caused by:
+  ERROR [plan_coverage]: Missing target coverage for sample 'toyA'. Specify 'target_coverage' in the samplesheet or pass '--target_coverage'. -- Check script 'modules/local/plan_coverage/main.nf' at line: 23
+
+
+Source block:
+  def genome_size = meta.genome_size_bp ?: params.genome_size_bp
+  def target_cov  = meta.target_coverage  ?: params.target_coverage 
+  
+  if (!genome_size) {
+      error "ERROR [plan_coverage]: Missing genome size for sample '${meta.id}'. Specify 'genome_size_bp' in the samplesheet or pass '--genome_size_bp'."
+  }
+  if (!target_cov) {
+      error "ERROR [plan_coverage]: Missing target coverage for sample '${meta.id}'. Specify 'target_coverage' in the samplesheet or pass '--target_coverage'."
+  }
+  
+  """
+  plan_coverage.py \\
+      --sample ${meta.id} \\
+      --r1 ${reads[0]} \\
+      --r2 ${reads[1]} \\
+      --target-length-file ${target_length_tsv} \\
+      --genome-size-bp ${genome_size} \\
+      --target-coverage ${target_cov} \\
+      --output ${meta.id}.coverage_plan.tsv
+  """
+
+Tip: you can replicate the issue by changing to the process work dir and entering the command `bash .command.run`
+Jul-31 15:15:22.827 [Actor Thread 9] DEBUG nextflow.Session - Session aborted -- Cause: ERROR [plan_coverage]: Missing target coverage for sample 'toyA'. Specify 'target_coverage' in the samplesheet or pass '--target_coverage'.
+Jul-31 15:15:22.863 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local) - terminating tasks monitor poll loop
+Jul-31 15:15:22.877 [Actor Thread 9] DEBUG nextflow.Session - The following nodes are still active:
+[process] REPEXPREP:COVERAGE_SAMPLING:PLAN_COVERAGE
+  status=ACTIVE
+  port 0: (queue) closed; channel: -
+  port 1: (cntrl) -     ; channel: $
+
+[process] REPEXPREP:COVERAGE_SAMPLING:SAMPLE_PAIRS
+  status=ACTIVE
+  port 0: (queue) OPEN  ; channel: -
+  port 1: (cntrl) -     ; channel: $
+
+[process] REPEXPREP:REPEX_FORMATTING:RENAME_FASTQ_TO_FASTA
+  status=ACTIVE
+  port 0: (queue) OPEN  ; channel: -
+  port 1: (cntrl) -     ; channel: $
+
+[process] REPEXPREP:REPEX_FORMATTING:VALIDATE_REPEX_FASTA
+  status=ACTIVE
+  port 0: (queue) OPEN  ; channel: -
+  port 1: (cntrl) -     ; channel: $
+
+Jul-31 15:15:22.901 [Actor Thread 9] WARN  n.processor.TaskPollingMonitor - Killing running tasks (1)
+Jul-31 15:15:22.924 [Actor Thread 9] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=5; failedCount=0; ignoredCount=0; cachedCount=2; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=1; succeedDuration=667ms; failedDuration=0ms; cachedDuration=642ms;loadCpus=0; loadMemory=0; peakRunning=3; peakCpus=3; peakMemory=0; ]
+Jul-31 15:15:23.046 [Actor Thread 9] DEBUG nextflow.trace.ReportObserver - Workflow completed -- rendering execution report
+Jul-31 15:15:23.655 [Actor Thread 9] DEBUG nextflow.trace.TimelineObserver - Workflow completed -- rendering execution timeline
+Jul-31 15:15:23.794 [Actor Thread 9] DEBUG nextflow.trace.TraceFileObserver - Workflow completed -- saving trace file
+Jul-31 15:15:23.809 [main] DEBUG nextflow.Session - Session await > all processes finished
+Jul-31 15:15:23.809 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Jul-31 15:15:23.815 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=5; failedCount=0; ignoredCount=0; cachedCount=2; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=1; succeedDuration=667ms; failedDuration=0ms; cachedDuration=642ms;loadCpus=0; loadMemory=0; peakRunning=3; peakCpus=3; peakMemory=0; ]
+Jul-31 15:15:23.815 [Actor Thread 13] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
+  task: name=REPEXPREP:COVERAGE_SAMPLING:PLAN_COVERAGE; work-dir=null
+  error [java.lang.InterruptedException]: java.lang.InterruptedException
+Jul-31 15:15:23.815 [main] DEBUG nextflow.trace.ReportObserver - Workflow completed -- rendering execution report
+Jul-31 15:15:24.201 [main] DEBUG nextflow.trace.TimelineObserver - Workflow completed -- rendering execution timeline
+Jul-31 15:15:24.266 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow completed -- saving trace file
+Jul-31 15:15:24.277 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Jul-31 15:15:24.313 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

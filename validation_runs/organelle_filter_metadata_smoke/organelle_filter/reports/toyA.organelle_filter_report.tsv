@@ -1,0 +1,2 @@
+sample	reference_id	status	input_r1_reads	input_r2_reads	retained_r1_reads	retained_r2_reads	input_pairs	retained_pairs	removed_pairs	removed_reads	retained_fraction	removed_fraction	sync_status
+1	NA	SKIPPED_NO_REFERENCE	1000	1000	1000	1000	1000	1000	0	0	1.000000	0.000000	PASS

@@ -1,0 +1,2 @@
+sample,fastq_1,fastq_2,lane,organism,genome_size_bp,ploidy,organelle_fasta,target_coverage,target_read_length
+toyA,/home/_lucia_/work/repex-pipeline/preproc/assets/test_data/toyA_R1.fastq.gz,/home/_lucia_/work/repex-pipeline/preproc/assets/test_data/toyA_R2.fastq.gz,L001,,135000000,2,org_reference/combined/carex_combined_orgs.fasta,,

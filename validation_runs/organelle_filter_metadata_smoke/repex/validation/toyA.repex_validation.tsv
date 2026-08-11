@@ -1,0 +1,2 @@
+sample	input_fasta	total_sequences	total_pairs	total_bases	min_length	max_length	mean_length	duplicate_headers	invalid_base_records	empty_sequences	malformed_pair_headers	status
+toyA	toyA.repex.fasta	2000	1000	300000	150	150	150.00	0	0	0	0	PASS

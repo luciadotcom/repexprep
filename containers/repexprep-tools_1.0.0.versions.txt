@@ -1,0 +1,17 @@
+### Python
+Python 3.12.13
+### FastQC
+FastQC v0.12.1
+### SeqKit
+seqkit v2.13.0
+### minimap2
+2.31-r1302
+### samtools
+samtools 1.24
+### SRA Toolkit
+prefetch : 3.4.1
+fasterq-dump : 3.4.1
+### Utilities
+pigz 2.8
+curl 8.21.0 (x86_64-conda-linux-gnu) libcurl/8.21.0 OpenSSL/3.6.3 zlib/1.3.2 zstd/1.5.7 libpsl/0.23.0 libssh2/1.11.1 nghttp2/1.68.1 mit-krb5/1.22.2
+jq-1.8.2
