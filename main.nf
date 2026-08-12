@@ -13,7 +13,12 @@ include { REPEXANALYSIS } from './workflows/repexanalysis'
 workflow {
     REPEXPREP()
 
-    if (params.run_repeatexplorer) {
-        REPEXANALYSIS ( REPEXPREP.out.repex_fasta )
+    def runRepeatExplorer =
+        params.run_repeatexplorer
+            ?.toString()
+            ?.toBoolean() ?: false
+
+    if (runRepeatExplorer) {
+        REPEXANALYSIS(REPEXPREP.out.repex_fasta)
     }
 }

@@ -15,6 +15,6 @@ workflow REPEXANALYSIS {
 
     repex_dir = RUN_REPEATEXPLORER.out.repex_dir
     logs = RUN_REPEATEXPLORER.out.logs
-    reports = RUN_REPEATEXPLORER.out.crop_reports
+    reports = RUN_REPEATEXPLORER.out.reports
     versions = RUN_REPEATEXPLORER.out.versions
 }
