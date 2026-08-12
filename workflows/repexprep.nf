@@ -96,7 +96,7 @@ workflow REPEXPREP {
     *Step 4: filter out organelles's DNA
     */
 
-    ORGANELLE_FILTERING(ch_samples)
+    ORGANELLE_FILTERING(READ_QC.out.reads)
 
     ORGANELLE_FILTERING.out.reports.view { sm, report_file ->
         "Organelle filter report: ${sm.id} | ${report_file}"
