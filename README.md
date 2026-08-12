@@ -290,7 +290,6 @@ status = PASS
 
 Planned developments include:
 
-- direct downloading of sequencing data from NCBI or ENA;
 - reproducible container support;
 - testing with the complete dataset;
 - improved automated testing;
