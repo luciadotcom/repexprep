@@ -4,9 +4,6 @@ process SAMPLE_PAIRS {
 
     label 'process_low'
 
-    publishDir "${params.outdir}/coverage_sampling/sampled_reads", mode: 'copy', pattern: "*.fastq.gz"
-    publishDir "${params.outdir}/coverage_sampling/reports", mode: 'copy', pattern: "*.sampling_report.tsv"
-
     input:
     tuple val(meta), path(reads), path(coverage_plan)
 

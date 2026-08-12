@@ -25,6 +25,18 @@
           "type": "boolean",
           "default": false,
           "description": "Enable development test mode."
+        },
+        "publish_dir_mode": {
+          "type": "string",
+          "default": "copy",
+          "enum": [
+            "copy",
+            "copyNoFollow",
+            "link",
+            "rellink",
+            "symlink"
+          ],
+          "description": "Method used to publish pipeline outputs."
         }
       },
       "required": [

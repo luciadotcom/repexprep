@@ -4,8 +4,6 @@ process PLAN_COVERAGE {
 
     label 'process_low'
 
-    publishDir "${params.outdir}/coverage_sampling/plans", mode: 'copy'
-
     input:
     tuple val(meta), path(reads), path(target_length_tsv)
 

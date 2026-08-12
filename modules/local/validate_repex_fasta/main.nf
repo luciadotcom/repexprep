@@ -4,12 +4,12 @@ process VALIDATE_REPEX_FASTA {
 
     label 'process_low'
 
-    publishDir "${params.outdir}/repex/validation", mode: 'copy'
-
     input:
     tuple val(meta), path(fasta)
 
     output:
+    tuple val(meta), path(fasta), emit: fasta
+
     tuple val(meta), path("${meta.id}.repex_validation.tsv"), emit: report
 
     script:

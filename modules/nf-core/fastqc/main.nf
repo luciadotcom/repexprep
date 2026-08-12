@@ -2,8 +2,6 @@ process FASTQC {
     tag "$meta.id"
     label 'process_medium'
 
-    publishDir "${params.outdir}/raw_qc/fastqc", mode: 'copy'
-
     conda "bioconda::fastqc=0.12.1"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/fastqc:0.12.1--hdfd78af_0' :
