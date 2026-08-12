@@ -52,11 +52,13 @@ workflow REPEXPREP {
                 sample            : row.sample,
                 lane              : row.lane,
                 organism          : row.organism,
+                genome_size_1C_bp : row.genome_size_1C_bp,
                 genome_size_bp    : row.genome_size_bp,
                 ploidy            : row.ploidy,
                 organelle_fasta   : row.organelle_fasta,
                 target_coverage   : row.target_coverage,
-                target_read_length: row.target_read_length
+                target_read_length: row.target_read_length,
+                sampling_seed     : row.sampling_seed
             ]
 
             tuple(

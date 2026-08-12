@@ -11,13 +11,14 @@ REQUIRED_COLUMNS = [
     "sample",
     "fastq_1",
     "fastq_2",
+    "genome_size_1C_bp",
+    "ploidy",
 ]
 
 OPTIONAL_COLUMNS = [
+    "lane",
     "organism",
-    "genome_size_1C_bp",
     "genome_size_bp",
-    "ploidy",
     "organelle_fasta",
     "target_coverage",
     "target_read_length",
@@ -185,20 +186,25 @@ def main() -> None:
             genome_size_1c_value = None
             genome_size_legacy_value = None
 
-            if genome_size_1c:
-                try:
-                    genome_size_1c_value = int(genome_size_1c)
-                except ValueError:
-                    die(
-                        f"Row {row_number}: genome_size_1C_bp "
-                        "must be a positive integer."
-                    )
+            if not genome_size_1c:
+                die(
+                    f"Row {row_number}: genome_size_1C_bp "
+                    "is mandatory and cannot be empty."
+                )
 
-                if genome_size_1c_value <= 0:
-                    die(
-                        f"Row {row_number}: genome_size_1C_bp "
-                        "must be a positive integer."
-                    )
+            try:
+                genome_size_1c_value = int(genome_size_1c)
+            except ValueError:
+                die(
+                    f"Row {row_number}: genome_size_1C_bp "
+                    "must be a positive integer."
+                )
+
+            if genome_size_1c_value <= 0:
+                die(
+                    f"Row {row_number}: genome_size_1C_bp "
+                    "must be a positive integer."
+                )
 
             if genome_size_legacy:
                 try:
@@ -227,30 +233,27 @@ def main() -> None:
                     "legacy genome_size_bp specify different values."
                 )
 
-            if (
-                genome_size_1c_value is None
-                and genome_size_legacy_value is not None
-            ):
-                clean["genome_size_1C_bp"] = str(
-                    genome_size_legacy_value
-                )
-
             ploidy = clean.get("ploidy", "")
 
-            if ploidy:
-                try:
-                    ploidy_value = int(ploidy)
-                except ValueError:
-                    die(
-                        f"Row {row_number}: ploidy must be "
-                        "a positive integer."
-                    )
+            if not ploidy:
+                die(
+                    f"Row {row_number}: ploidy "
+                    "is mandatory and cannot be empty."
+                )
 
-                if ploidy_value <= 0:
-                    die(
-                        f"Row {row_number}: ploidy must be "
-                        "a positive integer."
-                    )
+            try:
+                ploidy_value = int(ploidy)
+            except ValueError:
+                die(
+                    f"Row {row_number}: ploidy must be "
+                    "a positive integer."
+                )
+
+            if ploidy_value <= 0:
+                die(
+                    f"Row {row_number}: ploidy must be "
+                    "a positive integer."
+                )
 
             target_coverage = clean.get("target_coverage", "")
 
