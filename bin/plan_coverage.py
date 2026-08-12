@@ -214,7 +214,7 @@ def write_coverage_plan(
     sample: str,
     coverage_basis: str,
     genome_size_1c_bp: int,
-    ploidy: int,
+    ploidy: int | None,
     target_coverage: float,
     target_read_length: int,
     sampling_seed: int,
