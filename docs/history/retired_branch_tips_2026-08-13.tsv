@@ -1,0 +1,16 @@
+archive/process-implementation	c15a9cbbb7c545bf5d734de911d02389559e8f0c	2026-08-11 13:06:48 +0200	chore: preserve current experimental architecture before branch split
+experimental/input-acquisition	ee893ea37d3067e29e4e0e13cb0bb7fddbcd39ec	2026-08-11 14:34:45 +0200	docs: define stable and experimental branch boundary
+feat/global-target-length	9ed50daa638f249a1a8f67e41f38aa6f5ddbc023	2026-07-24 15:45:46 +0200	feat: normalize read length across comparative datasets
+main	ce5c8980fb17048577c628134b28e02bb960eda0	2026-08-13 14:18:21 +0200	fix: handle blank per-sample sampling seed
+rebuild/main-local-input	b673d479f4482ffce7461c7d8b74042076117b87	2026-07-31 12:40:15 +0200	feat: unify pipeline input handling
+rebuild/main-stable	ce5c8980fb17048577c628134b28e02bb960eda0	2026-08-13 14:18:21 +0200	fix: handle blank per-sample sampling seed
+refactor/nfcore-structure	5a69e4549d3d7f9d0b9b6c6d65b7c65d81d768f4	2026-07-23 16:12:32 +0200	feat(plan_coverage): enforce parameter precedence and validate inputs
+safety/pre-main-reset-2026-08-10	e9d26a70547998f40cb3d42ecb85a332c33d0d79	2026-08-06 14:52:02 +0200	feat: add equivalent Docker and Singularity profiles
+week2/container-parity	e9d26a70547998f40cb3d42ecb85a332c33d0d79	2026-08-06 14:52:02 +0200	feat: add equivalent Docker and Singularity profiles
+week2/fetch-reads	a196f02b07b053abaf2c152f451166663ef5111d	2026-08-04 15:14:04 +0200	feat: implement haploid 1C coverage sampling
+week2/output-publication	677556d92534bcfc1a783b3b7d6ecdacb1140e86	2026-08-05 19:02:50 +0200	test: validate published output layout
+week2/qc-trimming	9c6a10f1790c844daf0bbf31800f38fe60c76e43	2026-07-29 11:40:32 +0200	test: validate organelle filtering equivalence
+week2/repeatexplorer-call	a196f02b07b053abaf2c152f451166663ef5111d	2026-08-04 15:14:04 +0200	feat: implement haploid 1C coverage sampling
+week2/repeatexplorer-hardening	fadca7b03a79260058db15e5206e69c8514adf94	2026-08-05 17:58:37 +0200	refactor: harden optional RepeatExplorer execution
+week2/unified-input	7834b9f215654743e3e4c5c5ca238831c0d8a327	2026-08-03 13:32:57 +0200	feat: validate unified local and accession inputs
+week3/pilot	e9d26a70547998f40cb3d42ecb85a332c33d0d79	2026-08-06 14:52:02 +0200	feat: add equivalent Docker and Singularity profiles
