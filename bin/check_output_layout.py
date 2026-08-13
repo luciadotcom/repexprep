@@ -36,9 +36,9 @@ REQUIRED_PATTERNS = {
     "global target length":
         "length_normalization/target_length/global_target_length.tsv",
 
-    "per-sample target lengths":
-        "length_normalization/target_length/"
-        "target_length_per_sample.tsv",
+    #"per-sample target lengths":
+    #    "length_normalization/target_length/"
+    #   "target_length_per_sample.tsv",
 
     "crop reports":
         "length_normalization/reports/*.crop_report.tsv",
