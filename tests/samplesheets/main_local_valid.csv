@@ -1,2 +1,2 @@
-sample,fastq_1,fastq_2,genome_size_1C_bp,ploidy,organism,target_coverage,organelle_fasta,target_read_length,sampling_seed
-SRR38519255_Carex_boryana,data/subsample/local_test_subsample/fastq/SRR38519255_Carex_boryana_R1.fastq.gz,data/subsample/local_test_subsample/fastq/SRR38519255_Carex_boryana_R2.fastq.gz,1350000000,2,Carex_boryana,0.001,org_reference/combined/carex_combined_orgs.fasta,,
+sample,fastq_1,fastq_2,organism,genome_size_1C_bp,ploidy,organelle_fasta,target_coverage,target_read_length
+SRR38519255_Carex_boryana,data/subsample/local_test_subsample/fastq/SRR38519255_Carex_boryana_R1.fastq.gz,data/subsample/local_test_subsample/fastq/SRR38519255_Carex_boryana_R2.fastq.gz,Carex_boryana,1350000000,2,org_reference/combined/carex_combined_orgs.fasta,0.001,

@@ -1,0 +1,5 @@
+test	target_length_mode	run_repeatexplorer	expected
+preproc_mode1	global_auto	false	PASS
+preproc_mode2	global_fixed	false	PASS
+preproc_mode3	per_sample	false	NOT_IMPLEMENTED
+preproc_repex_chain	global_auto	true	PASS
