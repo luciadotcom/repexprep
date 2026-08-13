@@ -12,10 +12,11 @@ process SAMPLE_PAIRS {
     tuple val(meta), path("${meta.id}.sampling_report.tsv"), emit: report
 
     script:
-    def samplingSeed =
-        meta.sampling_seed != null
-            ? meta.sampling_seed
-            : params.sampling_seed
+    def sampleSeed = meta.sampling_seed
+    def samplingSeed = (
+        sampleSeed != null &&
+        sampleSeed.toString().trim() != ''
+    ) ? sampleSeed : params.sampling_seed
 
     if (samplingSeed == null) {
         error(
