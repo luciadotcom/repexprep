@@ -4,7 +4,6 @@ process RAW_FASTQ_STATS {
 
     label 'process_low'
 
-    publishDir "${params.outdir}/raw_qc/fastq_stats", mode: 'copy'
 
     input:
     tuple val(meta), path(reads)
