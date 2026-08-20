@@ -48,7 +48,7 @@ compatible for comparative RepeatExplorer analysis.
 - `target_read_length = null`
 - `min_retained_fraction = 0.95`
 - `min_target_read_length = 100`
-- `max_target_read_length = 200`
+- `max_target_read_length = 300`
 
 ## Samplesheet rules
 

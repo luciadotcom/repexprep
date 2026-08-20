@@ -109,7 +109,7 @@
         },
         "max_target_read_length": {
           "type": "integer",
-          "default": 200,
+          "default": 300,
           "minimum": 1,
           "description": "Maximum acceptable target read length."
         },
