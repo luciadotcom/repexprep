@@ -12,9 +12,9 @@ RepeatExplorer2 analysis can optionally be launched directly from the validated 
 ```mermaid
 flowchart TD
 A[Input samplesheet]--> B[VALIDATE_SAMPLESHEET]
-B --> C [Parsed sample channel]
+B --> C[Parsed sample channel]
 
-C --> D [FASTQ_INTEGRITY]
+C --> D[FASTQ_INTEGRITY]
 
 D --> E[FASTQC]
 D --> F[SEQKIT_STATS]
