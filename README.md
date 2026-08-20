@@ -11,7 +11,7 @@ RepeatExplorer2 analysis can optionally be launched directly from the validated 
 
 ```mermaid
 flowchart TD
-A [Input samplesheet]--> B[VALIDATE_SAMPLESHEET]
+A[Input samplesheet]--> B[VALIDATE_SAMPLESHEET]
 B --> C [Parsed sample channel]
 
 C --> D [FASTQ_INTEGRITY]
@@ -32,6 +32,7 @@ O --> P[Validated RepeatExplorer FASTA]
 
 P -. optional .-> Q[REPEATEXPLORER]
 Q --> R[RepeatExplorer results]
+'''
 ```
 
 ## Current status
